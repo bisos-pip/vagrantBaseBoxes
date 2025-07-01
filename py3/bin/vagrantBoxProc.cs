@@ -84,8 +84,6 @@ from bisos.common import csParam
 import collections
 ####+END:
 
-
-
 """ #+begin_org
 *  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CsFrmWrk   [[elisp:(outline-show-subtree+toggle)][||]] ~csuList emacs-list Specifications~  [[elisp:(blee:org:code-block/above-run)][ /Eval Below/ ]] [[elisp:(org-cycle)][| ]]
 #+BEGIN_SRC emacs-lisp
@@ -93,26 +91,30 @@ import collections
   (list
    "bisos.b.cs.ro"
    "bisos.csPlayer.bleep"
-   "bisos.facter.facter_csu"
-   "bisos.banna.bannaPortNu"
+   "bisos.common.commonCsParams"
+   "bisos.b.clsMethod_csu"
+   "bisos.debian.configFile"
+   "bisos.vagrantBaseBoxes.vagBoxes_csu"
  ))
 #+END_SRC
 #+RESULTS:
-| bisos.b.cs.ro | bisos.csPlayer.bleep | bisos.facter.facter_csu | bisos.banna.bannaPortNu |
+| bisos.b.cs.ro | bisos.csPlayer.bleep | bisos.common.commonCsParams | bisos.b.clsMethod_csu | bisos.debian.configFile | bisos.vagrantBaseBoxes.vagBoxes_csu |
 #+end_org """
 
 ####+BEGIN: b:py3:cs:framework/csuListProc :pyImports t :csuImports t :csuParams t :csmuParams nil
 """ #+begin_org
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CsFrmWrk   [[elisp:(outline-show-subtree+toggle)][||]] =Process CSU List= with /4/ in csuList pyImports=t csuImports=t csuParams=t
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CsFrmWrk   [[elisp:(outline-show-subtree+toggle)][||]] =Process CSU List= with /6/ in csuList pyImports=t csuImports=t csuParams=t
 #+end_org """
 
 from bisos.b.cs import ro
 from bisos.csPlayer import bleep
-from bisos.facter import facter_csu
-from bisos.banna import bannaPortNu
+from bisos.common import commonCsParams
+from bisos.b import clsMethod_csu
+from bisos.debian import configFile
+from bisos.vagrantBaseBoxes import vagBoxes_csu
 
 
-csuList = [ 'bisos.b.cs.ro', 'bisos.csPlayer.bleep', 'bisos.facter.facter_csu', 'bisos.banna.bannaPortNu', ]
+csuList = [ 'bisos.b.cs.ro', 'bisos.csPlayer.bleep', 'bisos.common.commonCsParams', 'bisos.b.clsMethod_csu', 'bisos.debian.configFile', 'bisos.vagrantBaseBoxes.vagBoxes_csu', ]
 
 g_importedCmndsModules = cs.csuList_importedModules(csuList)
 
@@ -131,6 +133,13 @@ def g_extraParams():
 
 cs.invOutcomeReportControl(cmnd=True, ro=True)
 
+####+BEGIN: b:py3:cs:main/exposedSymbols :classes ()
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CsFrmWrk   [[elisp:(outline-show-subtree+toggle)][||]] ~Exposed Symbols List Specification~ with /0/ in Classes List
+#+end_org """
+####+END:
+
+vagBoxAddJson = vagBoxes_csu.ConfigFile_vagBoxAddJson("")
 
 ####+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :sep nil :title "CmndSvcs" :anchor ""  :extraInfo "Command Services Section"
 """ #+begin_org
@@ -164,48 +173,9 @@ class examples(cs.Cmnd):
         #+end_org """)
 
         cs.examples.myName(cs.G.icmMyName(), cs.G.icmMyFullName())
-        cs.examples.commonBrief(roMenu=True,)
+        cs.examples.commonBrief()
 
-        if ro.csMuIsPerformer() is True:
-            facter_csu.roPerf_examples_csu().pyCmnd(sectionTitle="default")
-        elif ro.csMuIsInvoker() is True:
-            facter_csu.roInv_examples_csu().pyCmnd(sectionTitle="default")
-        elif ro.csMuIsDirect() is True:
-            bleep.examples_csBasic()
-            facter_csu.examples_csu().pyCmnd()
-        else:
-            b_io.eh.critical_oops()
-
-        return(cmndOutcome)
-
-####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "noCmndProcessor" :comment "" :parsMand "" :parsOpt "" :argsMin 0 :argsMax 9999 :pyInv ""
-""" #+begin_org
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CmndSvc-   [[elisp:(outline-show-subtree+toggle)][||]] <<noCmndProcessor>>  =verify= argsMax=9999 ro=cli   [[elisp:(org-cycle)][| ]]
-#+end_org """
-class noCmndProcessor(cs.Cmnd):
-    cmndParamsMandatory = [ ]
-    cmndParamsOptional = [ ]
-    cmndArgsLen = {'Min': 0, 'Max': 9999,}
-
-    @cs.track(fnLoc=True, fnEntry=True, fnExit=True)
-    def cmnd(self,
-             rtInv: cs.RtInvoker,
-             cmndOutcome: b.op.Outcome,
-             argsList: typing.Optional[list[str]]=None,  # CsArgs
-    ) -> b.op.Outcome:
-
-        failed = b_io.eh.badOutcome
-        callParamsDict = {}
-        if self.invocationValidate(rtInv, cmndOutcome, callParamsDict, argsList).isProblematic():
-            return failed(cmndOutcome)
-        cmndArgsSpecDict = self.cmndArgsSpec()
-####+END:
-        cmndOutcome = self.getOpOutcome()
-        if argsList:
-            facter_csu.factName().pyWCmnd(cmndOutcome, argsList=argsList)
-            print(cmndOutcome.results)
-        else:
-            examples().pyWCmnd(cmndOutcome,)
+        vagBoxes_csu.examples_csu().pyCmnd()
 
         return(cmndOutcome)
 
@@ -215,15 +185,15 @@ class noCmndProcessor(cs.Cmnd):
 #+end_org """
 ####+END:
 
-####+BEGIN: b:py3:cs:framework/main :csInfo "csInfo" :noCmndEntry "noCmndProcessor" :extraParamsHook "g_extraParams" :importedCmndsModules "g_importedCmndsModules"
+####+BEGIN: b:py3:cs:framework/main :csInfo "csInfo" :noCmndEntry "examples" :extraParamsHook "g_extraParams" :importedCmndsModules "g_importedCmndsModules"
 """ #+begin_org
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CsFrmWrk   [[elisp:(outline-show-subtree+toggle)][||]] =g_csMain= (csInfo, _noCmndProcessor_, g_extraParams, g_importedCmndsModules)
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CsFrmWrk   [[elisp:(outline-show-subtree+toggle)][||]] =g_csMain= (csInfo, _examples_, g_extraParams, g_importedCmndsModules)
 #+end_org """
 
 if __name__ == '__main__':
     cs.main.g_csMain(
         csInfo=csInfo,
-        noCmndEntry=noCmndProcessor,  # specify a Cmnd name
+        noCmndEntry=examples,  # specify a Cmnd name
         extraParamsHook=g_extraParams,
         importedCmndsModules=g_importedCmndsModules,
     )

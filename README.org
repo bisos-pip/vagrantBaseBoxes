@@ -15,16 +15,14 @@
 
 * Overview
 
-/bisos.vagrantBaseBoxes/ provides access to vagrantBaseBoxes information through python.
+/bisos.vagrantBaseBoxes/ provides various facilities for creation and management of
+Vagrant Packer Base Boxes.
 
-bisos.vagrantBaseBoxes is a python package that uses the  [[https://github.com/bisos-pip/pycs][PyCS-Framework]] for adoption and
-adaptation of *vagrantBaseBoxes* to python and PyCS-Framework. It is a BISOS-Capability and
-a Standalone-BISOS-Package.
+/bisos.vagrantBaseBoxes/ is a python package that uses the [[https://github.com/bisos-pip/pycs][PyCS-Framework]] for its
+implementation. It is a BISOS-Capability and a Standalone-BISOS-Package.
 
-/bisos.vagrantBaseBoxes/ is based on the [[https://github.com/bisos-pip/b][PyCS-Foundation]] and can be used both as a Command
-and as a Service (invoke/perform model of remote operations using [[https://github.com/tomerfiliba-org/rpyc][RPyC]]). Use of
-bisos.vagrantBaseBoxes as a service, can facilitate central management of multiple
-systems.
+Much of /bisos.vagrantBaseBoxes/ is based on https://github.com/rgl/debian-vagrant
+but our general data driven approach is different.
 
 #+BEGIN: b:org:pypi:readme/pkgDocumentation :pkgName "capability-cs" :comment "basic"
 
@@ -34,44 +32,37 @@ systems.
 
 * Table of Contents     :TOC:
 - [[#overview][Overview]]
-- [[#about-vagrantbaseboxes][About vagrantBaseBoxes]]
+- [[#about-vagrantbaseboxes-data-packer-base-box-specifications][About vagrantBaseBoxes Data (packer base box specifications)]]
 - [[#part-of-bisos-----bystar-internet-services-operating-system][Part of BISOS --- ByStar Internet Services Operating System]]
-- [[#bisosvagrantbaseboxes-is-a-command-services-pycs-facility][bisos.vagrantBaseBoxes is a Command-Services PyCS Facility]]
 - [[#bisosvagrantbaseboxes-as-a-standalone-piece-of-bisos][bisos.vagrantBaseBoxes as a Standalone Piece of BISOS]]
 - [[#installation][Installation]]
   - [[#installation-with-pip][Installation With pip]]
   - [[#installation-with-pipx][Installation With pipx]]
-  - [[#post-installation-basic-testing][Post Installation Basic Testing]]
 - [[#usage][Usage]]
-  - [[#local-usage-system-command-line][Local Usage (system command-line)]]
-  - [[#remote-usage-as-a-service----performerinvoker][Remote Usage (as a service -- Performer+Invoker)]]
-    - [[#performer][Performer]]
-    - [[#invoker][Invoker]]
-  - [[#use-by-python-script][Use by python script]]
-- [[#bisosvagrantbaseboxes-as-an-example-of-command-services-pycs----code-walkthrough][bisos.vagrantBaseBoxes as an Example of Command Services (PyCS) -- Code Walkthrough]]
-  - [[#py3binfactercs--binfacter-roperfcs--binfacter-roinvcs][./py3/bin/facter.cs  (./bin/facter-roPerf.cs  ./bin/facter-roInv.cs)]]
-  - [[#py3bisosfacterfacterpy-comeega-python][./py3/bisos/facter/facter.py (COMEEGA Python)]]
-  - [[#py3bisosfacterfacter_convpy-conventional-python][./py3/bisos/facter/facter_conv.py (Conventional Python)]]
-  - [[#py3bisosfacterfacter_csupy][./py3/bisos/facter/facter_csu.py]]
-  - [[#pypi-and-github-packaging][PyPi and Github Packaging]]
-- [[#documentation-and-blee-panels][Documentation and Blee-Panels]]
-  - [[#bisosvagrantbaseboxes-blee-panels][bisos.vagrantBaseBoxes Blee-Panels]]
+  - [[#first-install-the-packer-box-specifications][First Install the packer box specifications.]]
+  - [[#vagrantboxproccs-menu][vagrantBoxProc.cs Menu]]
 - [[#support][Support]]
 - [[#planned-improvements][Planned Improvements]]
 
-* About vagrantBaseBoxes
+* About vagrantBaseBoxes Data (packer base box specifications)
 
-[[https://www.puppet.com/docs/puppet/7/facter.html][VagrantBaseBoxes]]  is part of [[https://www.puppet.com/][puppet]], but it can also be used without puppet.
-VagrantBaseBoxes gathers information about the system as sets of hierarchical variables.
 
-To install vagrantBaseBoxes:
+/bisos.vagrantBaseBoxes/ is data driven. By itself it is useless. It operates on
+well structured directories which contain packer base box specifications.
+
+In BISOS, the packer base box specifications are in the form of a
+BISOS Repo Object (BRO). The github url for the BRO is:
+
+[[https://github.com/bxObjects/bro_vagrantDebianBaseBoxes]]
+
+In BISOS, the defaults are:
 
 #+begin_src bash
-sudo apt-get install -y vagrantBaseBoxes
+cd /bisos/git/bxRepos/bxObjects
+git clone https://github.com/bxObjects/bro_vagrantDebianBaseBoxes.git
 #+end_src
 
-VagrantBaseBoxes is a ruby package. This bisos.vagrantBaseBoxes python package provides access to
-vagrantBaseBoxes information through python both locally and remotely.
+You can clone that repo anywhere and then just adjust the command line path to it.
 
 * Part of BISOS --- ByStar Internet Services Operating System
 
@@ -83,30 +74,6 @@ ByStar, BISOS and Blee]] for information about getting started with BISOS.\\
 described as a cure for losses of autonomy and privacy in a book titled: [[https://github.com/bxplpc/120033][Nature
 of Polyexistentials]]
 
-/bisos.vagrantBaseBoxes/ is part of BISOS. Within BISOS, [[bisos.cmdb]] uses bisos.vagrantBaseBoxes for
-Configuration Management DataBase purposes.
-
-* bisos.vagrantBaseBoxes is a Command-Services PyCS Facility
-
-bisos.vagrantBaseBoxes can be used locally on command-line or remotely as a service.
-bisos.vagrantBaseBoxes is a PyCS multi-unit command-service.
-PyCS is a framework that converges development of CLI and Services.
-PyCS is an alternative to FastAPI, Typer and Click.
-
-bisos.vagrantBaseBoxes uses the PyCS-Framework to:
-
-1) Provide access to facter facilities through native python.
-2) Provide local access to facter facilities on CLI.
-3) Provide remote access to facter facilities through remote invocation of
-   python Expectation Complete Operations using [[https://github.com/tomerfiliba-org/rpyc][rpyc]].
-4) Provide remote access to facter facilities on CLI.
-
-What is unique in the PyCS-Framework is that these four models are all
-a single abstraction.
-
-The core of PyCS-Framework is the /bisos.b/ package (the PyCS-Foundation).
-See https://github.com/bisos-pip/b for an overview.
-
 * bisos.vagrantBaseBoxes as a Standalone Piece of BISOS
 
 bisos.vagrantBaseBoxes is a standalone piece of BISOS. It can be used as a self-contained
@@ -117,7 +84,7 @@ instructions below for your own use.
 * Installation
 
 The sources for the bisos.vagrantBaseBoxes pip package are maintained at:
-https://github.com/bisos-pip/facter.
+https://github.com/bisos-pip/vagrantBaseBoxes.
 
 The bisos.vagrantBaseBoxes pip package is available at PYPI as
 https://pypi.org/project/bisos.vagrantBaseBoxes
@@ -141,112 +108,28 @@ pipx install bisos.vagrantBaseBoxes
 #+end_src
 
 The following commands are made available:
-- facter.cs
-- facter-roInv.cs
-- facter-roPerf.cs
-
-These are all one file with 3 names. _facter-roInv.cs_ and _facter-roPerf.cs_ are sym-links to _facter.cs_
-
-** Post Installation Basic Testing
-
-After the installation, run some basic tests:
-
-#+begin_src bash
-facter.cs
-facter networking.interfaces.lo.bindings
-#+end_src
-
+- vagrantBaseBoxes-sbom.cs  (Software Bill of Material)
+- vagrantBoxProc.cs
 
 * Usage
 
-** Local Usage (system command-line)
+** First Install the packer box specifications.
 
-=facter.cs= does the equivalent of facter.
-
-#+begin_src bash
-bin/facter.cs
-#+end_src
-
-** Remote Usage (as a service -- Performer+Invoker)
-
-You can also run:
-
-
-*** Performer
-
-Invoke performer as:
+Clone the packer box specifications somewhere. Perhaps in your home directory.
 
 #+begin_src bash
-bin/facter-roPerf.cs
+git clone https://github.com/bxObjects/bro_vagrantDebianBaseBoxes.git
 #+end_src
 
-*** Invoker
+
+** vagrantBoxProc.cs Menu
+
+Run:
 
 #+begin_src bash
-bin/facter-roInv.cs
+vagrantBoxProc.cs
 #+end_src
 
-** Use by python script
-
-bisos.vagrantBaseBoxes Source Code is in written in COMEEGA (Collaborative Org-Mode Enhanced Emacs Generalized Authorship) -- https://github.com/bx-blee/comeega.
-
-The primary API for bisos.vagrantBaseBoxes is [[file:./py3/bisos/facter/facter_csu.py]]. It is self documented in COMEEGA.
-
-* bisos.vagrantBaseBoxes as an Example of Command Services (PyCS) -- Code Walkthrough
-
-An overview of the relevant files of the bisos.vagrantBaseBoxes package is provided below.
-
-** ./py3/bin/facter.cs  (./bin/facter-roPerf.cs  ./bin/facter-roInv.cs)
-
-The file [[file:./py3/bin/facter.cs]] is a CS-MU (Command-Services Multi-Unit).
-It is fundamentally a boiler plate that has the main framework org-mode Dynamic Block and
-which imports its commands from bisos.vagrantBaseBoxes.facter_csu and bisos.banna.bannaPortNu modules.
-
-** ./py3/bisos/facter/facter.py (COMEEGA Python)
-
-The file [[file:./py3/bisos/facter/facter.py]] includes functions that run a sub-process with "facter --json",
-obtain the json result as a collection of namedtuples. This can then be subjected to caching and
-then retrieved based on string representations mapping to namedtuples.
-
-** ./py3/bisos/facter/facter_conv.py (Conventional Python)
-
-The file [[file:./py3/bisos/facter/facter_conv.py]] is same as  [[file:./py3/bisos/facter/facter.py]]
-without use of COMEEGA. Without Emacs, it is not easy to read the COMEEGA files and some people
-prefer not to use or know about COMEEGA. In such situations facter_conv.py can be considered as
-conventional sample code.
-
-** ./py3/bisos/facter/facter_csu.py
-
-The file [[file:./py3/bisos/facter/facter_csu.py]] is a CS-U (Command-Services Unit).
-It includes definitions of commands and their CLI params and args.
-
-Implementation of commands in facter_csu.py rely on facilities provided in facter.py.
-
-** PyPi and Github Packaging
-
-All bisos-pip repos in the https://github.com/bisos-pip github organization follow the same structure.
-They all have [[file:./py3/setup.py]] files that are driven by [[file:./py3/pypiProc.sh]].
-
-The [[file:./py3/setup.py]] file is a series of consistent org-mode Dynamic Block
-that automatically determine the module name and the installed and pypi revisions.
-
-The [[file:./py3/pypiProc.sh]] uses setup.py and pushes to pypi when desired and
-allows for isolated testing using pipx.
-
-* Documentation and Blee-Panels
-
-bisos.vagrantBaseBoxes is part of ByStar Digital Ecosystem [[http://www.by-star.net]].
-
-This module's primary documentation is in the form of Blee-Panels.
-Additional information is also available in: [[http://www.by-star.net/PLPC/180047]]
-
-** bisos.vagrantBaseBoxes Blee-Panels
-
-bisos.vagrantBaseBoxes Blee-Panles are in ./panels directory.
-From within Blee and BISOS these panles are accessible under the
-Blee "Panels" menu.
-
-See [[file:./py3/panels/_nodeBase_/fullUsagePanel-en.org]] for a starting point.
 
 * Support
 
@@ -258,19 +141,7 @@ author/maintainer\\
 
 * Planned Improvements
 
-One material use of bisos.vagrantBaseBoxes is to facilitate developement of an automated
-Configuration Management DataBase (CMDB) as a centralized facility that
-organizes information about system, including the relationships between
-hardware, software, and networks. On a per-system base, bisos.vagrantBaseBoxes can obtain
-much of that information and through PyCS it can deliver that information
-remotely to centralized CMDBs. In this context CMDBs generally function as
-invokers and we need to facilitate ever present bisos.vagrantBaseBoxes performers.
-
-The CMDB invoker part is implemented as bisos.cmdb.
-
-Each BISOS platform needs to run an instance under systemd.
-I have done something similar to this for bisos.marmee.
-That piece need to be absorbed.
+- Fully absorb all of lcaVagrantXX.sh
 
 # Local Variables:
 # eval: (setq-local toc-org-max-depth 4)

@@ -43,24 +43,20 @@ def longDescription():
 # b:py3:pypi:setup/version Arguments  :forSys t :forPyPi t :constant "666"
 ####+BEGIN: b:py3:pypi:setup/version :comment "Auto Detected"
 
-# ./pypiUploadVer DID NOT exist -- forPypiVersion=1.25 -- forLocalVersion=0.92 -- constant=NA
+# ./pypiUploadVer DID NOT exist -- forPypiVersion=0.1 -- forLocalVersion=0.1 -- constant=NA
 def pkgVersion():
-        return '0.92'
+        return '0.1'
 
 ####+END:
 
 # b:py3:pypi:setup/requires :extras ; :requirements "requirements.txt" (bring here requirements.txt)
 ####+BEGIN: b:py3:pypi:setup/requires :extras ()
 
-requires = [
+requires = [ 
 "bisos",
 "bisos.b",
-"bisos.banna",
-"bisos.basics",
-"bisos.capability",
 "bisos.common",
 "bisos.csPlayer",
-"bisos.debian",
 "bisos.sbom",
 "setuptools==75.8.0",
 ]
@@ -69,21 +65,16 @@ requires = [
 # b:py3:pypi:setup/scripts :comment
 ####+BEGIN: b:py3:pypi:setup/scripts :comment ""
 
-scripts = [
-'bin/facter-assemble.cs',
-'bin/facter-cbs-is-np-sysd.cs',
-'bin/facter.cs',
-'bin/facter-roInv.cs',
-'bin/facter-roPerf.cs',
-'bin/facter-roPerf-sysd.cs',
-'bin/facter-sbom.cs',
+scripts = [ 
+'bin/vagrantBaseBoxes-sbom.cs',
+'bin/vagrantBoxProc.cs',
 ]
 ####+END:
 
 # b:py3:pypi:setup/dataFiles :comment
 ####+BEGIN: b:py3:pypi:setup/dataFiles :comment "Instead of ./MANIFEST.in or in pyproject.toml"
 
-data_files = [
+data_files = [ 
 (' ',  ['lh-agpl3-LICENSE.txt', '_description.org', 'README.rst']),
 ]
 ####+END:
@@ -92,7 +83,7 @@ data_files = [
 ####+BEGIN: b:py3:pypi:setup/funcArgs :comment "defaults to --auto--"
 
 setuptools.setup(
-    name=pkgName(),  # 'bisos.facter'
+    name=pkgName(),  # 'bisos.vagrantBaseBoxes'
     version=pkgVersion(),
     packages=setuptools.find_packages(),
     scripts=scripts,
