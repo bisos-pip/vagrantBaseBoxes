@@ -160,43 +160,93 @@ class examples_csu(cs.Cmnd):
         perfName = csParam.mappedValue('perfName', perfName)
 ####+END:
         self.cmndDocStr(f""" #+begin_org
-** [[elisp:(org-cycle)][| *CmndDesc:* | ]]  Basic example command.
+** [[elisp:(org-cycle)][| *CmndDesc:* | ]]  This command serves as a basic example,
+        demonstrating the usage of various discrete and compound commands related to Vagrant box paths.
         #+end_org """)
 
         od = collections.OrderedDict
         cmnd = cs.examples.cmndEnter
         literal = cs.examples.execInsert
 
-        cs.examples.menuChapter('=Direct Interface Commands=')
-
         oneVagBoxPath = "/bisos/git/bxRepos/bxObjects/bro_vagrantDebianBaseBoxes/qemu/debian/13/trixie/amd64/netinst/us.pkr.hcl"
+        oneDebianBaseBoxes = "/bisos/git/bxRepos/bxObjects/bro_vagrantDebianBaseBoxes"
 
         forceModePars = od([('force', 't'),])
+        infoLogPars = od([('verbosity', '20'),])        
+
+        cs.examples.menuChapter('=Discrete Commands=')
+
+        cs.examples.menuSection('/vagBoxPath ---  PathInfo Obtain/')
 
         cmnd('vagBoxPath_obtain',  args=oneVagBoxPath)
+        cmnd('vagBoxPath_obtain', pars=infoLogPars,  args=oneVagBoxPath)        
+        cmnd('vagBoxPath_obtain',
+             wrapper=f"find  {oneDebianBaseBoxes} -print | grep pkr.hcl | ",
+             )
 
-        cs.examples.menuSection('/vagBoxPath --- Discrete Commands/')
+        cs.examples.menuSection('/vagBoxPath --- BUILD/')
 
         cmnd('vagBoxPath_build',  args=oneVagBoxPath)
-        cmnd('vagBoxPath_add',  args=oneVagBoxPath)
-        cmnd('vagBoxPath_add', pars=forceModePars, args=oneVagBoxPath)
-        cmnd('vagBoxPath_run',  args=oneVagBoxPath)
-        cmnd('vagBoxPath_clean',  args=oneVagBoxPath)
+        cmnd('vagBoxPath_build',
+             wrapper=f"find  {oneDebianBaseBoxes} -print | grep pkr.hcl | ",
+             )
 
-        cs.examples.menuSection('/vagBoxPath --- Compound Commands/')
+        cs.examples.menuSection('/vagBoxPath --- ADD/')
+
+        cmnd('vagBoxPath_add',  args=oneVagBoxPath)
+        cmnd('vagBoxPath_add',
+             wrapper=f"find  {oneDebianBaseBoxes} -print | grep pkr.hcl | ",
+             )
+        
+        cmnd('vagBoxPath_add', pars=forceModePars, args=oneVagBoxPath)
+        cmnd('vagBoxPath_add',
+             pars=forceModePars,
+             wrapper=f"find  {oneDebianBaseBoxes} -print | grep pkr.hcl | ",
+             )
+
+        cs.examples.menuSection('/vagBoxPath --- CLEAN/')
+
+        cmnd('vagBoxPath_clean',  args=oneVagBoxPath)
+        cmnd('vagBoxPath_clean',
+             wrapper=f"find  {oneDebianBaseBoxes} -print | grep pkr.hcl | ",
+             )
+
+        cs.examples.menuSection('/vagBoxPath --- buildAdd Compound Commands/')
 
         cmnd('vagBoxPath_buildAdd',  args=oneVagBoxPath)
+        cmnd('vagBoxPath_buildAdd',
+             wrapper=f"find  {oneDebianBaseBoxes} -print | grep pkr.hcl | ",
+             )
+         
         cmnd('vagBoxPath_buildAdd', pars=forceModePars, args=oneVagBoxPath)
-        cmnd('vagBoxPath_buildAddClean',  args=oneVagBoxPath)
-        cmnd('vagBoxPath_buildAddClean', pars=forceModePars, args=oneVagBoxPath)
+        cmnd('vagBoxPath_buildAdd',
+             pars=forceModePars,
+             wrapper=f"find  {oneDebianBaseBoxes} -print | grep pkr.hcl | ",
+             )
 
+        cs.examples.menuSection('/vagBoxPath --- buildAddClean Compound Commands/')        
+
+        cmnd('vagBoxPath_buildAddClean',  args=oneVagBoxPath)
+        cmnd('vagBoxPath_buildAddClean',
+             wrapper=f"find  {oneDebianBaseBoxes} -print | grep pkr.hcl | ",
+             )
+
+        cmnd('vagBoxPath_buildAddClean', pars=forceModePars, args=oneVagBoxPath)
+        cmnd('vagBoxPath_buildAddClean',
+             pars=forceModePars,
+             wrapper=f"find  {oneDebianBaseBoxes} -print | grep pkr.hcl | ",
+             )
+    
         cs.examples.menuSection('/Commands for Development/')
 
         cmnd('cmndDevExamples')
+        cmnd('vagrantCommonCmnds')        
 
         cs.examples.menuChapter('=Related Commands=')
 
-        literal("vagrantBaseBoxes-sbom")
+        literal("vagrantBaseBoxes-sbom.cs")
+        literal("lcaVagrantBinsPrep.sh")
+        literal("vagrantCommonCmnds.cs")                
 
         return(cmndOutcome)
 
@@ -223,13 +273,89 @@ class cmndDevExamples(cs.Cmnd):
         perfName = csParam.mappedValue('perfName', perfName)
 ####+END:
         self.cmndDocStr(f""" #+begin_org
-** [[elisp:(org-cycle)][| *CmndDesc:* | ]]  Development example command.
+** [[elisp:(org-cycle)][| *CmndDesc:* | ]]  This command is a development example,
+        showcasing how to configure and manage Vagrant box paths using a JSON configuration file.
         #+end_org """)
 
         configFile.examples_csu(concreteConfigFile='vagBoxAddJson', sectionTitle="default")
 
         return(cmndOutcome)
 
+####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "vagrantCommonCmnds" :comment "" :parsMand "" :parsOpt "perfName" :argsMin 0 :argsMax 0 :pyInv ""
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CmndSvc-   [[elisp:(outline-show-subtree+toggle)][||]] <<vagrantCommonCmnds>>  =verify= parsOpt=perfName ro=cli   [[elisp:(org-cycle)][| ]]
+#+end_org """
+class vagrantCommonCmnds(cs.Cmnd):
+    cmndParamsMandatory = [ ]
+    cmndParamsOptional = [ 'perfName', ]
+    cmndArgsLen = {'Min': 0, 'Max': 0,}
+
+    @cs.track(fnLoc=True, fnEntry=True, fnExit=True)
+    def cmnd(self,
+             rtInv: cs.RtInvoker,
+             cmndOutcome: b.op.Outcome,
+             perfName: typing.Optional[str]=None,  # Cs Optional Param
+    ) -> b.op.Outcome:
+
+        failed = b_io.eh.badOutcome
+        callParamsDict = {'perfName': perfName, }
+        if self.invocationValidate(rtInv, cmndOutcome, callParamsDict, None).isProblematic():
+            return failed(cmndOutcome)
+        perfName = csParam.mappedValue('perfName', perfName)
+####+END:
+        self.cmndDocStr(f""" #+begin_org
+** [[elisp:(org-cycle)][| *CmndDesc:* | ]]  Provide direct examples of how to use vagrant.
+        #+end_org """)
+
+        # od = collections.OrderedDict
+        # cmnd = cs.examples.cmndEnter
+        literal = cs.examples.execInsert
+
+        cs.examples.menuChapter('=Direct Interface Commands=')
+
+        cs.examples.menuSection('/Vagrant Base Boxes/')
+
+        literal("ls -ld ~bystar/.vagrant.d/boxes")
+        literal("tree ~bystar/.vagrant.d/boxes")
+        literal("vagrant box list")
+        literal("vagrant box list -i")
+        literal("vagrant box --help")
+        literal("vagrant box add --provider libvirt peru/ubuntu-20.04-desktop-amd64")
+        literal("vagrant box add --provider libvirt generic/debian10")
+        literal("vagrant box remove boxName")
+        literal("vagrant box outdated   # Applies to current Vagrant directory")
+        literal("vagrant box outdated --global")
+        literal("vagrant box prune --provider libvirt peru/ubuntu-20.04-desktop-amd64")
+        
+        cs.examples.menuSection('/Vagrant Plugins/')
+
+        literal("vagrant plugin list --local")
+        literal("vagrant plugin list")
+        literal("vagrant plugin update")
+        literal("vagrant plugin install vagrant-libvirt")
+        
+        cs.examples.menuSection('/Vagrant Status And Information/')
+
+        literal("vagrant --version")
+        literal("vagrant global-status")
+        literal("vagrant global-status --prune   # rechecks cache and prunes invalid entries")
+        literal("vagrant status 6cd2a10")
+        
+        cs.examples.menuSection('/Creation Of Current Vagrant Directory/')
+
+        literal("vagrant init")
+        
+        cs.examples.menuSection('/Interact With Current Vagrant Directory/')
+
+        literal("vagrant validate")
+        literal("vagrant status")
+        literal("vagrant up")
+        literal("vagrant provision")
+        literal("vagrant destroy  # as if you never created the guest machine in the first place")        
+
+        return(cmndOutcome)
+
+    
 
 ####+BEGIN: b:py3:cs:func/typing :funcName "boxFileNameFromInfo" :comment "~CSU Specification~" :funcType "ParSpc" :deco ""
 """ #+begin_org
@@ -240,7 +366,7 @@ def boxFileNameFromInfo(
 ) -> str:
     boxPathInfo = vagBoxPathInfo.boxPathInfo
     return (
-        f"{boxPathInfo.distro}-{boxPathInfo.distroRel}-{boxPathInfo.cpuArch}-{boxPathInfo.provider}.box"
+        f"{boxPathInfo.distro}-{boxPathInfo.distroRel}-{boxPathInfo.boxCapability}-{boxPathInfo.selector}.box"
     )
 
 ####+BEGIN: b:py3:cs:func/typing :funcName "boxFileAbsPathFromInfo" :comment "~CSU Specification~" :funcType "ParSpc" :deco ""
@@ -277,7 +403,7 @@ def boxAddJsonFileNameFromInfo(
 ) -> str:
     boxPathInfo = vagBoxPathInfo.boxPathInfo
     return (
-        f"{boxPathInfo.distro}-{boxPathInfo.distroRel}-{boxPathInfo.cpuArch}-{boxPathInfo.provider}.boxAdd.json"
+        f"{boxPathInfo.distro}-{boxPathInfo.distroRel}-{boxPathInfo.boxCapability}-{boxPathInfo.selector}.box.add.json"        
     )
 
 ####+BEGIN: b:py3:cs:func/typing :funcName "boxAddJsonFileAbsPathFromInfo" :comment "~CSU Specification~" :funcType "ParSpc" :deco ""
@@ -293,14 +419,14 @@ def boxAddJsonFileAbsPathFromInfo(
     return boxAddJsonFileAbsPath
 
 
-####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "vagBoxPath_obtain" :comment "" :extent "verify" :ro "cli" :parsMand "" :parsOpt "" :argsMin 1 :argsMax 1 :pyInv ""
+####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "vagBoxPath_obtain" :comment "" :extent "verify" :ro "cli" :parsMand "" :parsOpt "" :argsMin 0 :argsMax 9999 :pyInv ""
 """ #+begin_org
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CmndSvc-   [[elisp:(outline-show-subtree+toggle)][||]] <<vagBoxPath_obtain>>  =verify= argsMin=1 argsMax=1 ro=cli   [[elisp:(org-cycle)][| ]]
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CmndSvc-   [[elisp:(outline-show-subtree+toggle)][||]] <<vagBoxPath_obtain>>  =verify= argsMax=9999 ro=cli   [[elisp:(org-cycle)][| ]]
 #+end_org """
 class vagBoxPath_obtain(cs.Cmnd):
     cmndParamsMandatory = [ ]
     cmndParamsOptional = [ ]
-    cmndArgsLen = {'Min': 1, 'Max': 1,}
+    cmndArgsLen = {'Min': 0, 'Max': 9999,}
 
     @cs.track(fnLoc=True, fnEntry=True, fnExit=True)
     def cmnd(self,
@@ -316,47 +442,57 @@ class vagBoxPath_obtain(cs.Cmnd):
         cmndArgsSpecDict = self.cmndArgsSpec()
 ####+END:
         self.cmndDocStr(f""" #+begin_org
-** [[elisp:(org-cycle)][| *CmndDesc:* | ]]  Returns runFacterAndGetJsonOutputBytes.
+** [[elisp:(org-cycle)][| *CmndDesc:* | ]]  Obtain Vagrant box path information from a given Packer file path.
         #+end_org """)
 
         self.captureRunStr(""" #+begin_org
 #+begin_src sh :results output :session shared
-  facter.cs -i factName networking.primary # os.distro.id
+  vagrantBoxProc.cs -i vagBoxPath_obtain /bisos/git/bxRepos/bxObjects/bro_vagrantDebianBaseBoxes/qemu/debian/13/trixie/amd64/netinst/us.pkr.hcl
 #+end_src
 #+RESULTS:
-: [{'networking.primary': 'enp1s0'}]
-
-#+begin_src sh :results output :session shared
-  facter-roInv.cs --perfName="HSS-1012" -i factName networking.primary os.distro.id
-#+end_src
-#+RESULTS:
-: Performing: factName () {'cache': 'True', 'fromFile': None, 'perfName': 'HSS-1012', 'argsList': ['networking.primary', 'os.distro.id'], 'rtInv': <bisos.b.cs.rtInvoker.RtInvoker object at 0x7fe0c4de2310>, 'cmndOutcome': <bisos.b.op.Outcome object at 0x7fe0c4de2590>}
-: Performer Outcome:: [{'networking.primary': 'eno1'}, {'os.distro.id': 'Debian'}]
-: [{'networking.primary': 'eno1'}, {'os.distro.id': 'Debian'}]
-
+: {'_boxCapability': 'netinst',
+:  '_cpuArch': 'amd64',
+:  '_creator': 'bx',
+:  '_distro': 'debian',
+:  '_distroRel': '13',
+:  '_distroVersion': '13.trixie',
+:  '_locale': 'us',
+:  '_provider': 'libvirt'}
+: <bisos.vagrantBaseBoxes.vagBoxPathInfo.VagBoxPathInfo object at 0x7ff68bd67390>
 
         #+end_org """)
 
-        vagBoxPkrFileStr = self.cmndArgsGet("0", cmndArgsSpecDict, argsList)
-        boxPathInfo = vagBoxPathInfo.vagBoxPathExtractInfo(pathlib.Path(vagBoxPkrFileStr))
+        cmndArgs = self.cmndArgsGet("0&9999", cmndArgsSpecDict, argsList)
 
-        if boxPathInfo is None:
-            return failed(cmndOutcome, f"Missing {vagBoxPkrFileStr}")
+        def processArgsAndStdin(cmndArgs, process):
+            for each in cmndArgs:
+                process(each)
+            stdinArgs = b_io.stdin.readAsList()
+            for each in stdinArgs:
+                process(each)
 
-        if rtInv.outs:
-            # b_io.tm.here(f"configFilePath")
-            pprint(vars(boxPathInfo))
+        def process(vagBoxPkrFileStr):
+            if rtInv.outs:
+                print(f"Obtaining Vagrant box path information from {vagBoxPkrFileStr}")
+            boxPathInfo = vagBoxPathInfo.vagBoxPathExtractInfo(pathlib.Path(vagBoxPkrFileStr))
+            if boxPathInfo is None:
+                return failed(cmndOutcome, f"Missing {vagBoxPkrFileStr}")
 
-            boxFileName = boxFileNameFromInfo()
-            print(f"boxFileName = {boxFileName}")
+            if rtInv.outs:
+                pprint(vars(boxPathInfo))
 
-            boxFileAbsPath = boxFileAbsPathFromInfo()
-            print(f"boxFileAbsPath = {boxFileAbsPath}")
+                boxFileName = boxFileNameFromInfo()
+                print(f"boxFileName = {boxFileName}")
 
-            boxName = boxNameFromInfo()
-            print(f"boxName = {boxName}")
+                boxFileAbsPath = boxFileAbsPathFromInfo()
+                print(f"boxFileAbsPath = {boxFileAbsPath}")
 
-        return cmndOutcome.set(opResults=boxPathInfo,)
+                boxName = boxNameFromInfo()
+                print(f"boxName = {boxName}")
+
+        processArgsAndStdin(cmndArgs, process)
+
+        return cmndOutcome.set(opResults=vagBoxPathInfo.boxPathInfo,)
 
 
 ####+BEGIN: b:py3:cs:method/args :methodName "cmndArgsSpec" :methodType "anyOrNone" :retType "bool" :deco "default" :argsList "self"
@@ -372,8 +508,8 @@ class vagBoxPath_obtain(cs.Cmnd):
         cmndArgsSpecDict = cs.CmndArgsSpecDict()
 
         cmndArgsSpecDict.argsDictAdd(
-            argPosition="0",
-            argName="vagBoxPath",
+            argPosition="0&9999",
+            argName="vagBoxPkrFileStr",
             argDefault='',
             argChoices=[],
             argDescription="One argument, any string for vagBoxPath"
@@ -381,14 +517,14 @@ class vagBoxPath_obtain(cs.Cmnd):
 
         return cmndArgsSpecDict
 
-####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "vagBoxPath_build" :extent "verify" :parsMand "" :parsOpt "" :argsMin 1 :argsMax 1 :pyInv ""
+####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "vagBoxPath_build" :extent "verify" :parsMand "" :parsOpt "" :argsMin 0 :argsMax 9999 :pyInv ""
 """ #+begin_org
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CmndSvc-   [[elisp:(outline-show-subtree+toggle)][||]] <<vagBoxPath_build>>  =verify= argsMin=1 argsMax=1 ro=cli   [[elisp:(org-cycle)][| ]]
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CmndSvc-   [[elisp:(outline-show-subtree+toggle)][||]] <<vagBoxPath_build>>  =verify= argsMax=9999 ro=cli   [[elisp:(org-cycle)][| ]]
 #+end_org """
 class vagBoxPath_build(cs.Cmnd):
     cmndParamsMandatory = [ ]
     cmndParamsOptional = [ ]
-    cmndArgsLen = {'Min': 1, 'Max': 1,}
+    cmndArgsLen = {'Min': 0, 'Max': 9999,}
 
     @cs.track(fnLoc=True, fnEntry=True, fnExit=True)
     def cmnd(self,
@@ -404,48 +540,57 @@ class vagBoxPath_build(cs.Cmnd):
         cmndArgsSpecDict = self.cmndArgsSpec()
 ####+END:
         self.cmndDocStr(f""" #+begin_org
-** [[elisp:(org-cycle)][| *CmndDesc:* | ]] Return a dict of parName:parValue as results
+** [[elisp:(org-cycle)][| *CmndDesc:* | ]]  Build a Vagrant box from a specified Packer file path.
         #+end_org """)
 
-        vagBoxPkrFileStr = self.cmndArgsGet("0", cmndArgsSpecDict, argsList)
-        boxPathInfo = vagBoxPathInfo.vagBoxPathExtractInfo(pathlib.Path(vagBoxPkrFileStr))
+        cmndArgs = self.cmndArgsGet("0&9999", cmndArgsSpecDict, argsList)
 
-        if boxPathInfo is None:
-            return failed(cmndOutcome, f"Missing {vagBoxPkrFileStr}")
+        def processArgsAndStdin(cmndArgs, process):
+            for each in cmndArgs:
+                process(each)
+            stdinArgs = b_io.stdin.readAsList()
+            for each in stdinArgs:
+                process(each)
 
-        boxBaseDir = boxPathInfo.boxBaseDir
+        def process(vagBoxPkrFileStr):
+            print(f"Building Vagrant box from {vagBoxPkrFileStr}")
+            boxPathInfo = vagBoxPathInfo.vagBoxPathExtractInfo(pathlib.Path(vagBoxPkrFileStr))
+            if boxPathInfo is None:
+                return failed(cmndOutcome, f"Missing {vagBoxPkrFileStr}")
 
-        boxFileName = boxFileNameFromInfo()
-        boxFilePath = boxBaseDir.joinpath(boxFileName)
+            boxBaseDir = boxPathInfo.boxBaseDir
 
-        if boxFilePath.is_file():
-            boxFilePath.unlink()
+            boxFileName = boxFileNameFromInfo()
+            boxFilePath = boxBaseDir.joinpath(boxFileName)
 
-        if b.subProc.Op(outcome=cmndOutcome,
-                        cd=boxBaseDir,
-                        log=1).bash(
-f"""env \
-        CHECKPOINT_DISABLE=1 \
-	    PACKER_LOG=1 \
-	    PACKER_LOG_PATH={boxFileName}.init.log \
-        packer init {boxPathInfo.selector}.pkr.hcl"""
-        ).isProblematic():  return(b_io.eh.badOutcome(cmndOutcome))
+            if boxFilePath.is_file():
+                boxFilePath.unlink()
 
-        if b.subProc.Op(outcome=cmndOutcome,
-                        cd=boxBaseDir,
-                        log=1).bash(
-f"""env \
-        PACKER_KEY_INTERVAL=10ms \
-	    CHECKPOINT_DISABLE=1 \
-	    PACKER_LOG=1 \
-	    PACKER_LOG_PATH={boxFileName}.log \
-	    PKR_VAR_version={boxPathInfo.distroRel} \
-	    PKR_VAR_vagrant_box={boxFileName} \
-		packer build -on-error=abort -timestamp-ui {boxPathInfo.selector}.pkr.hcl"""
-        ).isProblematic():  return(b_io.eh.badOutcome(cmndOutcome))
+            if b.subProc.Op(outcome=cmndOutcome,
+                            cd=boxBaseDir,
+                            log=1).bash(
+                f"""env \
+                CHECKPOINT_DISABLE=1 \
+                PACKER_LOG=1 \
+                PACKER_LOG_PATH={boxFileName}.init.log \
+                packer init {boxPathInfo.selector}.pkr.hcl"""
+            ).isProblematic():  return(b_io.eh.badOutcome(cmndOutcome))
 
-        # -only=qemu.debian-amd64 
-        
+            if b.subProc.Op(outcome=cmndOutcome,
+                            cd=boxBaseDir,
+                            log=1).bash(
+                f"""env \
+                PACKER_KEY_INTERVAL=10ms \
+                CHECKPOINT_DISABLE=1 \
+                PACKER_LOG=1 \
+                PACKER_LOG_PATH={boxFileName}.log \
+                PKR_VAR_version={boxPathInfo.distroRel} \
+                PKR_VAR_vagrant_box={boxFileName} \
+                packer build -on-error=abort -timestamp-ui {boxPathInfo.selector}.pkr.hcl"""
+            ).isProblematic():  return(b_io.eh.badOutcome(cmndOutcome))
+
+        processArgsAndStdin(cmndArgs, process)
+
         return cmndOutcome.set(
             opError=b.OpError.Success,
             opResults=None,
@@ -464,8 +609,8 @@ f"""env \
         cmndArgsSpecDict = cs.CmndArgsSpecDict()
 
         cmndArgsSpecDict.argsDictAdd(
-            argPosition="0",
-            argName="vagBoxPath",
+            argPosition="0&9999",
+            argName="vagBoxPkrFileStr",
             argDefault='',
             argChoices=[],
             argDescription="One argument, any string for vagBoxPath"
@@ -473,14 +618,14 @@ f"""env \
 
         return cmndArgsSpecDict
 
-####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "vagBoxPath_add" :extent "verify" :parsMand "" :parsOpt "force" :argsMin 1 :argsMax 1 :pyInv ""
+####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "vagBoxPath_add" :extent "verify" :parsMand "" :parsOpt "force" :argsMin 0 :argsMax 9999 :pyInv ""
 """ #+begin_org
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CmndSvc-   [[elisp:(outline-show-subtree+toggle)][||]] <<vagBoxPath_add>>  =verify= parsOpt=force argsMin=1 argsMax=1 ro=cli   [[elisp:(org-cycle)][| ]]
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CmndSvc-   [[elisp:(outline-show-subtree+toggle)][||]] <<vagBoxPath_add>>  =verify= parsOpt=force argsMax=9999 ro=cli   [[elisp:(org-cycle)][| ]]
 #+end_org """
 class vagBoxPath_add(cs.Cmnd):
     cmndParamsMandatory = [ ]
     cmndParamsOptional = [ 'force', ]
-    cmndArgsLen = {'Min': 1, 'Max': 1,}
+    cmndArgsLen = {'Min': 0, 'Max': 9999,}
 
     @cs.track(fnLoc=True, fnEntry=True, fnExit=True)
     def cmnd(self,
@@ -498,41 +643,50 @@ class vagBoxPath_add(cs.Cmnd):
         force = csParam.mappedValue('force', force)
 ####+END:
         self.cmndDocStr(f""" #+begin_org
-** [[elisp:(org-cycle)][| *CmndDesc:* | ]] Return a dict of parName:parValue as results
+** [[elisp:(org-cycle)][| *CmndDesc:* | ]]  Add a Vagrant box to the local Vagrant environment, optionally forcing the addition.
         #+end_org """)
 
-        vagBoxPkrFileStr = self.cmndArgsGet("0", cmndArgsSpecDict, argsList)
-        boxPathInfo = vagBoxPathInfo.vagBoxPathExtractInfo(pathlib.Path(vagBoxPkrFileStr))
+        cmndArgs = self.cmndArgsGet("0&9999", cmndArgsSpecDict, argsList)
 
-        if boxPathInfo is None:
-            return failed(cmndOutcome, f"Missing {vagBoxPkrFileStr}")
+        def processArgsAndStdin(cmndArgs, process):
+            for each in cmndArgs:
+                process(each)
+            stdinArgs = b_io.stdin.readAsList()
+            for each in stdinArgs:
+                process(each)
 
-        forceStr = ""
-        if force is not False:
-            forceStr = " -f "
+        def process(vagBoxPkrFileStr):
+            print(f"Adding Vagrant box from {vagBoxPkrFileStr}")
+            boxPathInfo = vagBoxPathInfo.vagBoxPathExtractInfo(pathlib.Path(vagBoxPkrFileStr))
+            if boxPathInfo is None:
+                return failed(cmndOutcome, f"Missing {vagBoxPkrFileStr}")
 
-        boxBaseDir = boxPathInfo.boxBaseDir
+            forceStr = ""
+            if force is not False:
+                forceStr = " -f "
 
-        boxFileName = boxFileNameFromInfo()
-        boxFilePath = boxBaseDir.joinpath(boxFileName)
+            boxBaseDir = boxPathInfo.boxBaseDir
 
-        if not boxFilePath.is_file():
-            return failed(cmndOutcome, f"Missing {boxFilePath}")
+            boxFileName = boxFileNameFromInfo()
+            boxFilePath = boxBaseDir.joinpath(boxFileName)
 
-        boxName = boxNameFromInfo()
+            if not boxFilePath.is_file():
+                return failed(cmndOutcome, f"Missing {boxFilePath}")
 
-        # __main__ provides for automation configFile  menu/examples
-        __main__.vagBoxAddJson.configFileUpdate()
+            boxName = boxNameFromInfo()
 
-        boxAddJsonFileAbsPath = boxAddJsonFileAbsPathFromInfo()
-        if not boxAddJsonFileAbsPath.is_file():
-            return failed(cmndOutcome, f"Missing {boxAddJsonFileAbsPath}")
+            __main__.vagBoxAddJson.configFileUpdate()
 
+            boxAddJsonFileAbsPath = boxAddJsonFileAbsPathFromInfo()
+            if not boxAddJsonFileAbsPath.is_file():
+                return failed(cmndOutcome, f"Missing {boxAddJsonFileAbsPath}")
 
-        if b.subProc.Op(outcome=cmndOutcome,
-                        log=1).bash(
-f"""vagrant box add {forceStr} --name "{boxName}" {boxAddJsonFileAbsPath}"""
-        ).isProblematic():  return(b_io.eh.badOutcome(cmndOutcome))
+            if b.subProc.Op(outcome=cmndOutcome,
+                            log=1).bash(
+                f"""vagrant box add {forceStr} --name "{boxName}" {boxAddJsonFileAbsPath}"""
+            ).isProblematic():  return(b_io.eh.badOutcome(cmndOutcome))
+
+        processArgsAndStdin(cmndArgs, process)
 
         return cmndOutcome.set(
             opError=b.OpError.Success,
@@ -552,8 +706,8 @@ f"""vagrant box add {forceStr} --name "{boxName}" {boxAddJsonFileAbsPath}"""
         cmndArgsSpecDict = cs.CmndArgsSpecDict()
 
         cmndArgsSpecDict.argsDictAdd(
-            argPosition="0",
-            argName="vagBoxPath",
+            argPosition="0&9999",
+            argName="vagBoxPkrFileStr",
             argDefault='',
             argChoices=[],
             argDescription="One argument, any string for vagBoxPath"
@@ -587,7 +741,7 @@ class vagBoxPath_add_withName_OBSOLETED(cs.Cmnd):
         force = csParam.mappedValue('force', force)
 ####+END:
         self.cmndDocStr(f""" #+begin_org
-** [[elisp:(org-cycle)][| *CmndDesc:* | ]] Return a dict of parName:parValue as results
+** [[elisp:(org-cycle)][| *CmndDesc:* | ]]  Clean up Vagrant box files and logs from the specified Packer file path.
         #+end_org """)
 
         vagBoxPkrPathStr = self.cmndArgsGet("0", cmndArgsSpecDict, argsList)
@@ -633,8 +787,8 @@ f"""vagrant box add {forceStr} --name "{boxName}" --provider {boxPathInfo.provid
         cmndArgsSpecDict = cs.CmndArgsSpecDict()
 
         cmndArgsSpecDict.argsDictAdd(
-            argPosition="0",
-            argName="vagBoxPath",
+            argPosition="0&9999",
+            argName="vagBoxPkrFileStr",
             argDefault='',
             argChoices=[],
             argDescription="One argument, any string for vagBoxPath"
@@ -643,14 +797,14 @@ f"""vagrant box add {forceStr} --name "{boxName}" --provider {boxPathInfo.provid
         return cmndArgsSpecDict
 
 
-####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "vagBoxPath_clean" :extent "verify" :parsMand "" :parsOpt "" :argsMin 1 :argsMax 1 :pyInv ""
+####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "vagBoxPath_clean" :extent "verify" :parsMand "" :parsOpt "" :argsMin 0 :argsMax 9999 :pyInv ""
 """ #+begin_org
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CmndSvc-   [[elisp:(outline-show-subtree+toggle)][||]] <<vagBoxPath_clean>>  =verify= argsMin=1 argsMax=1 ro=cli   [[elisp:(org-cycle)][| ]]
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CmndSvc-   [[elisp:(outline-show-subtree+toggle)][||]] <<vagBoxPath_clean>>  =verify= argsMax=9999 ro=cli   [[elisp:(org-cycle)][| ]]
 #+end_org """
 class vagBoxPath_clean(cs.Cmnd):
     cmndParamsMandatory = [ ]
     cmndParamsOptional = [ ]
-    cmndArgsLen = {'Min': 1, 'Max': 1,}
+    cmndArgsLen = {'Min': 0, 'Max': 9999,}
 
     @cs.track(fnLoc=True, fnEntry=True, fnExit=True)
     def cmnd(self,
@@ -666,34 +820,50 @@ class vagBoxPath_clean(cs.Cmnd):
         cmndArgsSpecDict = self.cmndArgsSpec()
 ####+END:
         self.cmndDocStr(f""" #+begin_org
-** [[elisp:(org-cycle)][| *CmndDesc:* | ]] Return a dict of parName:parValue as results
+** [[elisp:(org-cycle)][| *CmndDesc:* | ]]  Build and add a Vagrant box to the local environment, with an option to force the addition.
         #+end_org """)
 
-        vagBoxPkrFileStr = self.cmndArgsGet("0", cmndArgsSpecDict, argsList)
-        boxPathInfo = vagBoxPathInfo.vagBoxPathExtractInfo(pathlib.Path(vagBoxPkrFileStr))
+        cmndArgs = self.cmndArgsGet("0&9999", cmndArgsSpecDict, argsList)
 
-        if boxPathInfo is None:
-            return failed(cmndOutcome, f"Missing {vagBoxPkrFileStr}")
+        def processArgsAndStdin(cmndArgs, process):
 
-        boxBaseDir = boxPathInfo.boxBaseDir
+            for each in cmndArgs:
+                process(each)
+            stdinArgs = b_io.stdin.readAsList()
+            for each in stdinArgs:
+                process(each)
 
-        boxFileName = boxFileNameFromInfo()
-        boxFilePath = boxBaseDir.joinpath(boxFileName)
+        def process(vagBoxPkrFileStr):
 
-        if boxFilePath.is_file():
-            boxFilePath.unlink()
+            print(f"Processing {vagBoxPkrFileStr}")
+            
+            boxPathInfo = vagBoxPathInfo.vagBoxPathExtractInfo(pathlib.Path(vagBoxPkrFileStr))
 
-        boxFileInitLog = boxBaseDir.joinpath(f"{boxFileName}.init.log")
-        if boxFileInitLog.is_file():
-            boxFileInitLog.unlink()
+            if boxPathInfo is None:
+                return failed(cmndOutcome, f"Missing {vagBoxPkrFileStr}")
 
-        boxFileLog = boxBaseDir.joinpath(f"{boxFileName}.log")
-        if boxFileLog.is_file():
-            boxFileLog.unlink()
+            boxBaseDir = boxPathInfo.boxBaseDir
 
-        boxAddJsonFile = boxAddJsonFileAbsPathFromInfo()
-        if boxAddJsonFile.is_file():
-            boxAddJsonFile.unlink()
+            boxFileName = boxFileNameFromInfo()
+            boxFilePath = boxBaseDir.joinpath(boxFileName)
+
+            if boxFilePath.is_file():
+                boxFilePath.unlink()
+
+            boxFileInitLog = boxBaseDir.joinpath(f"{boxFileName}.init.log")
+            if boxFileInitLog.is_file():
+                boxFileInitLog.unlink()
+
+            boxFileLog = boxBaseDir.joinpath(f"{boxFileName}.log")
+            if boxFileLog.is_file():
+                boxFileLog.unlink()
+
+            boxAddJsonFile = boxAddJsonFileAbsPathFromInfo()
+            if boxAddJsonFile.is_file():
+                boxAddJsonFile.unlink()
+
+ 
+        processArgsAndStdin(cmndArgs, process)
 
         return cmndOutcome.set(
             opError=b.OpError.Success,
@@ -713,8 +883,8 @@ class vagBoxPath_clean(cs.Cmnd):
         cmndArgsSpecDict = cs.CmndArgsSpecDict()
 
         cmndArgsSpecDict.argsDictAdd(
-            argPosition="0",
-            argName="vagBoxPath",
+            argPosition="0&9999",
+            argName="vagBoxPkrFileStr",
             argDefault='',
             argChoices=[],
             argDescription="One argument, any string for vagBoxPath"
@@ -722,14 +892,14 @@ class vagBoxPath_clean(cs.Cmnd):
 
         return cmndArgsSpecDict
 
-####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "vagBoxPath_buildAdd" :extent "verify" :parsMand "force" :parsOpt "" :argsMin 1 :argsMax 1 :pyInv ""
+####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "vagBoxPath_buildAdd" :extent "verify" :parsMand "force" :parsOpt "" :argsMin 0 :argsMax 9999 :pyInv ""
 """ #+begin_org
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CmndSvc-   [[elisp:(outline-show-subtree+toggle)][||]] <<vagBoxPath_buildAdd>>  =verify= parsMand=force argsMin=1 argsMax=1 ro=cli   [[elisp:(org-cycle)][| ]]
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CmndSvc-   [[elisp:(outline-show-subtree+toggle)][||]] <<vagBoxPath_buildAdd>>  =verify= parsMand=force argsMax=9999 ro=cli   [[elisp:(org-cycle)][| ]]
 #+end_org """
 class vagBoxPath_buildAdd(cs.Cmnd):
     cmndParamsMandatory = [ 'force', ]
     cmndParamsOptional = [ ]
-    cmndArgsLen = {'Min': 1, 'Max': 1,}
+    cmndArgsLen = {'Min': 0, 'Max': 9999,}
 
     @cs.track(fnLoc=True, fnEntry=True, fnExit=True)
     def cmnd(self,
@@ -747,23 +917,34 @@ class vagBoxPath_buildAdd(cs.Cmnd):
         force = csParam.mappedValue('force', force)
 ####+END:
         self.cmndDocStr(f""" #+begin_org
-** [[elisp:(org-cycle)][| *CmndDesc:* | ]] Return a dict of parName:parValue as results
+** [[elisp:(org-cycle)][| *CmndDesc:* | ]]  Build, add, and clean a Vagrant box in the local environment, with an option to force the addition.
         #+end_org """)
 
-        vagBoxPkrFileStr = self.cmndArgsGet("0", cmndArgsSpecDict, argsList)
-        boxPathInfo = vagBoxPathInfo.vagBoxPathExtractInfo(pathlib.Path(vagBoxPkrFileStr))
+        cmndArgs = self.cmndArgsGet("0&9999", cmndArgsSpecDict, argsList)
 
-        if boxPathInfo is None:
-            return failed(cmndOutcome, f"Missing {vagBoxPkrFileStr}")
+        def processArgsAndStdin(cmndArgs, process):
+            for each in cmndArgs:
+                process(each)
+            stdinArgs = b_io.stdin.readAsList()
+            for each in stdinArgs:
+                process(each)
 
-        if vagBoxPath_build().pyCmnd(
-                argsList=[vagBoxPkrFileStr,],
-        ).isProblematic(): return(b_io.eh.badOutcome(cmndOutcome))
+        def process(vagBoxPkrFileStr):
+            print(f"Building and adding Vagrant box from {vagBoxPkrFileStr}")
+            boxPathInfo = vagBoxPathInfo.vagBoxPathExtractInfo(pathlib.Path(vagBoxPkrFileStr))
+            if boxPathInfo is None:
+                return failed(cmndOutcome, f"Missing {vagBoxPkrFileStr}")
 
-        if vagBoxPath_add().pyCmnd(
-                force=force,
-                argsList=[vagBoxPkrFileStr,],
-        ).isProblematic(): return(b_io.eh.badOutcome(cmndOutcome))
+            if vagBoxPath_build().pyCmnd(
+                    argsList=[vagBoxPkrFileStr,],
+            ).isProblematic(): return(b_io.eh.badOutcome(cmndOutcome))
+
+            if vagBoxPath_add().pyCmnd(
+                    force=force,
+                    argsList=[vagBoxPkrFileStr,],
+            ).isProblematic(): return(b_io.eh.badOutcome(cmndOutcome))
+
+        processArgsAndStdin(cmndArgs, process)
 
         return cmndOutcome.set(
             opError=b.OpError.Success,
@@ -783,8 +964,8 @@ class vagBoxPath_buildAdd(cs.Cmnd):
         cmndArgsSpecDict = cs.CmndArgsSpecDict()
 
         cmndArgsSpecDict.argsDictAdd(
-            argPosition="0",
-            argName="vagBoxPath",
+            argPosition="0&9999",
+            argName="vagBoxPkrFileStr",
             argDefault='',
             argChoices=[],
             argDescription="One argument, any string for vagBoxPath"
@@ -792,14 +973,14 @@ class vagBoxPath_buildAdd(cs.Cmnd):
 
         return cmndArgsSpecDict
 
-####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "vagBoxPath_buildAddClean" :extent "verify" :parsMand "force" :parsOpt "" :argsMin 1 :argsMax 1 :pyInv ""
+####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "vagBoxPath_buildAddClean" :extent "verify" :parsMand "force" :parsOpt "" :argsMin 0 :argsMax 9999 :pyInv ""
 """ #+begin_org
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CmndSvc-   [[elisp:(outline-show-subtree+toggle)][||]] <<vagBoxPath_buildAddClean>>  =verify= parsMand=force argsMin=1 argsMax=1 ro=cli   [[elisp:(org-cycle)][| ]]
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CmndSvc-   [[elisp:(outline-show-subtree+toggle)][||]] <<vagBoxPath_buildAddClean>>  =verify= parsMand=force argsMax=9999 ro=cli   [[elisp:(org-cycle)][| ]]
 #+end_org """
 class vagBoxPath_buildAddClean(cs.Cmnd):
     cmndParamsMandatory = [ 'force', ]
     cmndParamsOptional = [ ]
-    cmndArgsLen = {'Min': 1, 'Max': 1,}
+    cmndArgsLen = {'Min': 0, 'Max': 9999,}
 
     @cs.track(fnLoc=True, fnEntry=True, fnExit=True)
     def cmnd(self,
@@ -817,27 +998,38 @@ class vagBoxPath_buildAddClean(cs.Cmnd):
         force = csParam.mappedValue('force', force)
 ####+END:
         self.cmndDocStr(f""" #+begin_org
-** [[elisp:(org-cycle)][| *CmndDesc:* | ]] Return a dict of parName:parValue as results
+** [[elisp:(org-cycle)][| *CmndDesc:* | ]] 
         #+end_org """)
 
-        vagBoxPkrFileStr = self.cmndArgsGet("0", cmndArgsSpecDict, argsList)
-        boxPathInfo = vagBoxPathInfo.vagBoxPathExtractInfo(pathlib.Path(vagBoxPkrFileStr))
+        cmndArgs = self.cmndArgsGet("0&9999", cmndArgsSpecDict, argsList)
 
-        if boxPathInfo is None:
-            return failed(cmndOutcome, f"Missing {vagBoxPkrFileStr}")
+        def processArgsAndStdin(cmndArgs, process):
+            for each in cmndArgs:
+                process(each)
+            stdinArgs = b_io.stdin.readAsList()
+            for each in stdinArgs:
+                process(each)
 
-        if vagBoxPath_build().pyCmnd(
-                argsList=[vagBoxPkrFileStr,],
-        ).isProblematic(): return(b_io.eh.badOutcome(cmndOutcome))
+        def process(vagBoxPkrFileStr):
+            print(f"Building, adding, and cleaning Vagrant box from {vagBoxPkrFileStr}")
+            boxPathInfo = vagBoxPathInfo.vagBoxPathExtractInfo(pathlib.Path(vagBoxPkrFileStr))
+            if boxPathInfo is None:
+                return failed(cmndOutcome, f"Missing {vagBoxPkrFileStr}")
 
-        if vagBoxPath_add().pyCmnd(
-                force=force,
-                argsList=[vagBoxPkrFileStr,],
-        ).isProblematic(): return(b_io.eh.badOutcome(cmndOutcome))
+            if vagBoxPath_build().pyCmnd(
+                    argsList=[vagBoxPkrFileStr,],
+            ).isProblematic(): return(b_io.eh.badOutcome(cmndOutcome))
 
-        if vagBoxPath_buildAddClean().pyCmnd(
-                force=force,
-        ).isProblematic(): return(b_io.eh.badOutcome(cmndOutcome))
+            if vagBoxPath_add().pyCmnd(
+                    force=force,
+                    argsList=[vagBoxPkrFileStr,],
+            ).isProblematic(): return(b_io.eh.badOutcome(cmndOutcome))
+
+            if vagBoxPath_buildAddClean().pyCmnd(
+                    force=force,
+            ).isProblematic(): return(b_io.eh.badOutcome(cmndOutcome))
+
+        processArgsAndStdin(cmndArgs, process)
 
         return cmndOutcome.set(
             opError=b.OpError.Success,
@@ -857,8 +1049,8 @@ class vagBoxPath_buildAddClean(cs.Cmnd):
         cmndArgsSpecDict = cs.CmndArgsSpecDict()
 
         cmndArgsSpecDict.argsDictAdd(
-            argPosition="0",
-            argName="vagBoxPath",
+            argPosition="0&9999",
+            argName="vagBoxPkrFileStr",
             argDefault='',
             argChoices=[],
             argDescription="One argument, any string for vagBoxPath"
@@ -879,7 +1071,7 @@ class vagBoxPath_buildAddClean(cs.Cmnd):
 class ConfigFile_vagBoxAddJson(configFile.ConfigFile):
 ####+END:
     """ #+begin_org
-** [[elisp:(org-cycle)][| DocStr| ]]  InMail Service Access Instance Class for an Accessible Abstract Service.
+** [[elisp:(org-cycle)][| DocStr| ]]  Configuration file class for managing Vagrant box add JSON configurations.
     #+end_org """
 
 ####+BEGIN: b:py3:cs:method/typing :methodName "configFilePath" :deco "default"
@@ -892,7 +1084,7 @@ class ConfigFile_vagBoxAddJson(configFile.ConfigFile):
             self,
     ) -> pathlib.Path:
         """ #+begin_org
-*** [[elisp:(org-cycle)][| DocStr| ]]  Return path
+*** [[elisp:(org-cycle)][| DocStr| ]]  Returns the configuration file path for the Vagrant box add JSON configuration.
         #+end_org """
 
         pkrFileAbsPath = vagBoxPathInfo.boxPathInfo.pkrFileAbsPath
@@ -913,7 +1105,8 @@ class ConfigFile_vagBoxAddJson(configFile.ConfigFile):
             self,
     ) -> str:
         """ #+begin_org
-*** [[elisp:(org-cycle)][| DocStr| ]]  Returns string
+*** [[elisp:(org-cycle)][| DocStr| ]]  Returns a JSON string representing the Vagrant box metadata configuration.
+The configuration includes the box name, version, provider, and URL path.
 Taken from https://github.com/rgl/debian-vagrant/blob/master/box-metadata.sh
 -------------
 # see https://developer.hashicorp.com/vagrant/docs/boxes/format#box-metadata

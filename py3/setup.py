@@ -43,7 +43,7 @@ def longDescription():
 # b:py3:pypi:setup/version Arguments  :forSys t :forPyPi t :constant "666"
 ####+BEGIN: b:py3:pypi:setup/version :comment "Auto Detected"
 
-# ./pypiUploadVer DID NOT exist -- forPypiVersion=0.1 -- forLocalVersion=0.1 -- constant=NA
+# ./pypiUploadVer DID NOT exist -- forPypiVersion=0.11 -- forLocalVersion=0.1 -- constant=NA
 def pkgVersion():
         return '0.1'
 
@@ -57,6 +57,7 @@ requires = [
 "bisos.b",
 "bisos.common",
 "bisos.csPlayer",
+"bisos.debian",
 "bisos.sbom",
 "setuptools==75.8.0",
 ]
@@ -68,6 +69,7 @@ requires = [
 scripts = [ 
 'bin/vagrantBaseBoxes-sbom.cs',
 'bin/vagrantBoxProc.cs',
+'bin/vagrantCommonCmnds.cs',
 ]
 ####+END:
 
