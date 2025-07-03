@@ -168,6 +168,7 @@ class examples_csu(cs.Cmnd):
         cmnd = cs.examples.cmndEnter
         literal = cs.examples.execInsert
 
+        herePkrPath = "./us.pkr.hcl"
         oneVagBoxPath = "/bisos/git/bxRepos/bxObjects/bro_vagrantDebianBaseBoxes/qemu/debian/13/trixie/amd64/netinst/us.pkr.hcl"
         oneDebianBaseBoxes = "/bisos/git/bxRepos/bxObjects/bro_vagrantDebianBaseBoxes"
 
@@ -178,6 +179,7 @@ class examples_csu(cs.Cmnd):
 
         cs.examples.menuSection('/vagBoxPath ---  PathInfo Obtain/')
 
+        cmnd('vagBoxPath_obtain',  args=herePkrPath)
         cmnd('vagBoxPath_obtain',  args=oneVagBoxPath)
         cmnd('vagBoxPath_obtain', pars=infoLogPars,  args=oneVagBoxPath)        
         cmnd('vagBoxPath_obtain',
@@ -186,6 +188,7 @@ class examples_csu(cs.Cmnd):
 
         cs.examples.menuSection('/vagBoxPath --- BUILD/')
 
+        cmnd('vagBoxPath_build',  args=herePkrPath)
         cmnd('vagBoxPath_build',  args=oneVagBoxPath)
         cmnd('vagBoxPath_build',
              wrapper=f"find  {oneDebianBaseBoxes} -print | grep pkr.hcl | ",
@@ -193,11 +196,13 @@ class examples_csu(cs.Cmnd):
 
         cs.examples.menuSection('/vagBoxPath --- ADD/')
 
+        cmnd('vagBoxPath_add',  args=herePkrPath)        
         cmnd('vagBoxPath_add',  args=oneVagBoxPath)
         cmnd('vagBoxPath_add',
              wrapper=f"find  {oneDebianBaseBoxes} -print | grep pkr.hcl | ",
              )
-        
+
+        cmnd('vagBoxPath_add', pars=forceModePars, args=herePkrPath)                
         cmnd('vagBoxPath_add', pars=forceModePars, args=oneVagBoxPath)
         cmnd('vagBoxPath_add',
              pars=forceModePars,
@@ -206,18 +211,19 @@ class examples_csu(cs.Cmnd):
 
         cs.examples.menuSection('/vagBoxPath --- CLEAN/')
 
+        cmnd('vagBoxPath_clean',  args=herePkrPath)        
         cmnd('vagBoxPath_clean',  args=oneVagBoxPath)
         cmnd('vagBoxPath_clean',
              wrapper=f"find  {oneDebianBaseBoxes} -print | grep pkr.hcl | ",
              )
 
         cs.examples.menuSection('/vagBoxPath --- buildAdd Compound Commands/')
-
+        
         cmnd('vagBoxPath_buildAdd',  args=oneVagBoxPath)
         cmnd('vagBoxPath_buildAdd',
              wrapper=f"find  {oneDebianBaseBoxes} -print | grep pkr.hcl | ",
              )
-         
+        cmnd('vagBoxPath_buildAdd', pars=forceModePars, args=herePkrPath)        
         cmnd('vagBoxPath_buildAdd', pars=forceModePars, args=oneVagBoxPath)
         cmnd('vagBoxPath_buildAdd',
              pars=forceModePars,
@@ -231,6 +237,7 @@ class examples_csu(cs.Cmnd):
              wrapper=f"find  {oneDebianBaseBoxes} -print | grep pkr.hcl | ",
              )
 
+        cmnd('vagBoxPath_buildAddClean', pars=forceModePars, args=herePkrPath)                
         cmnd('vagBoxPath_buildAddClean', pars=forceModePars, args=oneVagBoxPath)
         cmnd('vagBoxPath_buildAddClean',
              pars=forceModePars,

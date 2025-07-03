@@ -255,7 +255,7 @@ Example:
 
     #+end_org """
 
-    pkrFileAbsPath = vagBoxPkrPath.resolve()
+    pkrFileAbsPath = vagBoxPkrPath.absolute()   # Important don't .resolve() so that symlinks work.
 
     if not pkrFileAbsPath.is_file():
         return None
@@ -265,7 +265,7 @@ Example:
     boxPathInfo.pkrFileAbsPath = pkrFileAbsPath
     boxPathInfo.boxBaseDir = boxBaseDir
 
-    path_parts = vagBoxPkrPath.parts
+    path_parts = pkrFileAbsPath.parts
 
     # Assuming the path structure is fixed and known
     # Example path: /bisos/git/bxRepos/bxObjects/bro_vagrantDebianBaseBoxes/qemu/debian/13/trixie/amd64/netinst/us.pkr.hcl
