@@ -234,7 +234,7 @@ class examples_csu(cs.Cmnd):
              wrapper=f"find  {oneDebianBaseBoxes} -print | grep pkr.hcl | ",
              )
 
-        cs.examples.menuSection('/vagBoxPath --- buildAdd Compound Commands/')
+        cs.examples.menuSection('/vagBoxPath --- BUILD+ADD Compound Commands/')
         
         cmnd('vagBoxPath_buildAdd',  args=oneVagBoxPath)
         cmnd('vagBoxPath_buildAdd',
@@ -247,7 +247,20 @@ class examples_csu(cs.Cmnd):
              wrapper=f"find  {oneDebianBaseBoxes} -print | grep pkr.hcl | ",
              )
 
-        cs.examples.menuSection('/vagBoxPath --- buildAddClean Compound Commands/')        
+        cs.examples.menuSection('/vagBoxPath --- BUILD+ADD+RUN Compound Commands/')
+
+        cmnd('vagBoxPath_buildAddRun',  args=oneVagBoxPath)
+        cmnd('vagBoxPath_buildAddRun',
+             wrapper=f"find  {oneDebianBaseBoxes} -print | grep pkr.hcl | ",
+             )
+        cmnd('vagBoxPath_buildAddRun', pars=forceModePars, args=herePkrPath)
+        cmnd('vagBoxPath_buildAddRun', pars=forceModePars, args=oneVagBoxPath)
+        cmnd('vagBoxPath_buildAddRun',
+             pars=forceModePars,
+             wrapper=f"find  {oneDebianBaseBoxes} -print | grep pkr.hcl | ",
+             )
+
+        cs.examples.menuSection('/vagBoxPath --- BUILD+ADD+CLEAN Compound Commands/')
 
         cmnd('vagBoxPath_buildAddClean',  args=oneVagBoxPath)
         cmnd('vagBoxPath_buildAddClean',
@@ -260,7 +273,22 @@ class examples_csu(cs.Cmnd):
              pars=forceModePars,
              wrapper=f"find  {oneDebianBaseBoxes} -print | grep pkr.hcl | ",
              )
-    
+
+        cs.examples.menuSection('/vagBoxPath --- BUILD+ADD+RUN+CLEAN Compound Commands/')
+
+        cmnd('vagBoxPath_buildAddRunClean',  args=oneVagBoxPath)
+        cmnd('vagBoxPath_buildAddRunClean',
+             wrapper=f"find  {oneDebianBaseBoxes} -print | grep pkr.hcl | ",
+             )
+
+        cmnd('vagBoxPath_buildAddRunClean', pars=forceModePars, args=herePkrPath)
+        cmnd('vagBoxPath_buildAddRunClean', pars=forceModePars, args=oneVagBoxPath)
+        cmnd('vagBoxPath_buildAddRunClean',
+             pars=forceModePars,
+             wrapper=f"find  {oneDebianBaseBoxes} -print | grep pkr.hcl | ",
+             )
+
+
         cs.examples.menuSection('/Commands for Development/')
 
         cmnd('cmndDevExamples')
