@@ -140,6 +140,7 @@ cs.invOutcomeReportControl(cmnd=True, ro=True)
 ####+END:
 
 vagBoxAddJson = vagBoxes_csu.ConfigFile_vagBoxAddJson("")
+vagrantFile = vagBoxes_csu.ConfigFile_vagrantFile("")
 
 ####+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :sep nil :title "CmndSvcs" :anchor ""  :extraInfo "Command Services Section"
 """ #+begin_org
