@@ -100,6 +100,8 @@ from bisos.debian import configFile
 
 from bisos.vagrantBaseBoxes import vagBoxPathInfo
 
+
+
 from pprint import pprint
 
 import pathlib
@@ -218,14 +220,6 @@ class examples_csu(cs.Cmnd):
              wrapper=f"find  {oneDebianBaseBoxes} -print | grep pkr.hcl | ",
              )
 
-        cmnd('vagBoxPath_run', pars=forceModePars, args=herePkrPath)
-        cmnd('vagBoxPath_run', pars=forceModePars, args=oneVagBoxPath)
-        cmnd('vagBoxPath_run',
-             pars=forceModePars,
-             wrapper=f"find  {oneDebianBaseBoxes} -print | grep pkr.hcl | ",
-             )
-
-
         cs.examples.menuSection('/vagBoxPath --- CLEAN/')
 
         cmnd('vagBoxPath_clean',  args=herePkrPath)        
@@ -301,6 +295,114 @@ class examples_csu(cs.Cmnd):
         literal("vagrantCommonCmnds.cs")                
 
         return(cmndOutcome)
+
+
+####+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :sep nil :title "Direct Command Services" :anchor ""  :extraInfo "Examples and CSs"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*     [[elisp:(outline-show-subtree+toggle)][| _Direct Command Services_: |]]  Examples and CSs  [[elisp:(org-shifttab)][<)]] E|
+#+end_org """
+####+END:
+
+####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "examples_seed" :comment "" :parsMand "" :parsOpt "perfName" :argsMin 0 :argsMax 0 :pyInv ""
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CmndSvc-   [[elisp:(outline-show-subtree+toggle)][||]] <<examples_seed>>  =verify= parsOpt=perfName ro=cli   [[elisp:(org-cycle)][| ]]
+#+end_org """
+class examples_seed(cs.Cmnd):
+    cmndParamsMandatory = [ ]
+    cmndParamsOptional = [ 'perfName', ]
+    cmndArgsLen = {'Min': 0, 'Max': 0,}
+
+    @cs.track(fnLoc=True, fnEntry=True, fnExit=True)
+    def cmnd(self,
+             rtInv: cs.RtInvoker,
+             cmndOutcome: b.op.Outcome,
+             perfName: typing.Optional[str]=None,  # Cs Optional Param
+    ) -> b.op.Outcome:
+
+        failed = b_io.eh.badOutcome
+        callParamsDict = {'perfName': perfName, }
+        if self.invocationValidate(rtInv, cmndOutcome, callParamsDict, None).isProblematic():
+            return failed(cmndOutcome)
+        perfName = csParam.mappedValue('perfName', perfName)
+####+END:
+        self.cmndDocStr(f""" #+begin_org
+** [[elisp:(org-cycle)][| *CmndDesc:* | ]]  This command serves as a basic example,
+        demonstrating the usage of various discrete and compound commands related to Vagrant box paths.
+        #+end_org """)
+
+        od = collections.OrderedDict
+        cmnd = cs.examples.cmndEnter
+        literal = cs.examples.execInsert
+
+        # Should be imported here, not at the top -- Otherwise atexit is triggered.
+        from bisos.vagrantBaseBoxes import vagBoxSeed
+
+        vagBoxList = vagBoxSeed.vagBoxSeedInfo.vagBoxList
+        if vagBoxList is None:
+            vagBoxList = []
+
+        forceModePars = od([('force', 't'),])
+        # infoLogPars = od([('verbosity', '20'),])
+
+        cs.examples.menuChapter('=Discrete Commands=')
+
+        cs.examples.menuSection('/vagBoxPath ---  PathInfo Obtain/')
+
+        for each in vagBoxList:
+            cmnd('vagBoxPath_obtain',  args=each)
+
+        cs.examples.menuSection('/vagBoxPath --- BUILD/')
+
+        for each in vagBoxList:
+            cmnd('vagBoxPath_build',  args=each)
+
+        cs.examples.menuSection('/vagBoxPath --- ADD/')
+
+        for each in vagBoxList:
+            cmnd('vagBoxPath_add',  args=each)
+            cmnd('vagBoxPath_add', pars=forceModePars, args=each)
+
+        cs.examples.menuSection('/vagBoxPath --- RUN/')
+
+        for each in vagBoxList:
+            cmnd('vagBoxPath_run',  args=each)
+
+        cs.examples.menuSection('/vagBoxPath --- CLEAN/')
+
+        for each in vagBoxList:
+            cmnd('vagBoxPath_clean',  args=each)
+
+        cs.examples.menuSection('/vagBoxPath --- BUILD+ADD Compound Commands/')
+
+        for each in vagBoxList:
+            cmnd('vagBoxPath_buildAdd',  args=each)
+            cmnd('vagBoxPath_buildAdd', pars=forceModePars, args=each)
+
+        cs.examples.menuSection('/vagBoxPath --- BUILD+ADD+RUN Compound Commands/')
+
+        for each in vagBoxList:
+            cmnd('vagBoxPath_buildAddRun',  args=each)
+            cmnd('vagBoxPath_buildAddRun', pars=forceModePars, args=each)
+
+        cs.examples.menuSection('/vagBoxPath --- BUILD+ADD+CLEAN Compound Commands/')
+
+        for each in vagBoxList:
+            cmnd('vagBoxPath_buildAddClean',  args=each)
+            cmnd('vagBoxPath_buildAddClean', pars=forceModePars, args=each)
+        
+        cs.examples.menuSection('/vagBoxPath --- BUILD+ADD+RUN+CLEAN Compound Commands/')
+
+        for each in vagBoxList:
+            cmnd('vagBoxPath_buildAddRunClean',  args=each)
+            cmnd('vagBoxPath_buildAddRunClean', pars=forceModePars, args=each)
+ 
+        cs.examples.menuChapter('=Related Commands=')
+
+        literal("vagrantBoxProc.cs")
+        literal("vagrantCommonCmnds.cs")
+
+        return(cmndOutcome)
+
 
 ####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "cmndDevExamples" :comment "" :parsMand "" :parsOpt "perfName" :argsMin 0 :argsMax 0 :pyInv ""
 """ #+begin_org
@@ -481,7 +583,7 @@ def vagRunBaseDirNameFromInfo(
 ) -> str:
     boxPathInfo = vagBoxPathInfo.boxPathInfo
     return (
-        f"vagRun-{boxPathInfo.boxCapability}-{boxPathInfo.selector}"        
+        f"vagRunBox-{boxPathInfo.distro}-{boxPathInfo.distroVersion}-{boxPathInfo.boxCapability}-{boxPathInfo.selector}"
     )
 
 ####+BEGIN: b:py3:cs:func/typing :funcName "vagRunBaseDirAbsPathFromInfo" :comment "~CSU Specification~" :funcType "ParSpc" :deco ""
@@ -682,23 +784,23 @@ class vagBoxPath_build(cs.Cmnd):
                             cd=boxBaseDir,
                             log=1).bash(
                 f"""env \
-                CHECKPOINT_DISABLE=1 \
-                PACKER_LOG=1 \
-                PACKER_LOG_PATH={boxFileName}.init.log \
-                packer init {boxPathInfo.selector}.pkr.hcl"""
+CHECKPOINT_DISABLE=1 \
+PACKER_LOG=1 \
+PACKER_LOG_PATH={boxFileName}.init.log \
+packer init {boxPathInfo.selector}.pkr.hcl"""
             ).isProblematic():  return(b_io.eh.badOutcome(cmndOutcome))
 
             if b.subProc.Op(outcome=cmndOutcome,
                             cd=boxBaseDir,
                             log=1).bash(
                 f"""env \
-                PACKER_KEY_INTERVAL=10ms \
-                CHECKPOINT_DISABLE=1 \
-                PACKER_LOG=1 \
-                PACKER_LOG_PATH={boxFileName}.log \
-                PKR_VAR_version={boxPathInfo.distroRel} \
-                PKR_VAR_vagrant_box={boxFileName} \
-                packer build -on-error=abort -timestamp-ui {boxPathInfo.selector}.pkr.hcl"""
+PACKER_KEY_INTERVAL=10ms \
+CHECKPOINT_DISABLE=1 \
+PACKER_LOG=1 \
+PACKER_LOG_PATH={boxFileName}.log \
+PKR_VAR_version={boxPathInfo.distroRel} \
+PKR_VAR_vagrant_box={boxFileName} \
+packer build -on-error=abort -timestamp-ui {boxPathInfo.selector}.pkr.hcl"""
             ).isProblematic():  return(b_io.eh.badOutcome(cmndOutcome))
 
         processArgsAndStdin(cmndArgs, process)
@@ -1182,7 +1284,6 @@ class vagBoxPath_buildAddRun(cs.Cmnd):
             ).isProblematic(): return(b_io.eh.badOutcome(cmndOutcome))
 
             if vagBoxPath_run().pyCmnd(
-                    force=force,
                     argsList=[vagBoxPkrFileStr,],
             ).isProblematic(): return(b_io.eh.badOutcome(cmndOutcome))
 
@@ -1268,7 +1369,7 @@ class vagBoxPath_buildAddClean(cs.Cmnd):
             ).isProblematic(): return(b_io.eh.badOutcome(cmndOutcome))
 
             if vagBoxPath_clean().pyCmnd(
-                    force=force,
+                    argsList=[vagBoxPkrFileStr,],
             ).isProblematic(): return(b_io.eh.badOutcome(cmndOutcome))
 
         processArgsAndStdin(cmndArgs, process)
@@ -1354,12 +1455,11 @@ class vagBoxPath_buildAddRunClean(cs.Cmnd):
             ).isProblematic(): return(b_io.eh.badOutcome(cmndOutcome))
 
             if vagBoxPath_run().pyCmnd(
-                    force=force,
                     argsList=[vagBoxPkrFileStr,],
             ).isProblematic(): return(b_io.eh.badOutcome(cmndOutcome))
 
             if vagBoxPath_clean().pyCmnd(
-                    force=force,
+                    argsList=[vagBoxPkrFileStr,],
             ).isProblematic(): return(b_io.eh.badOutcome(cmndOutcome))
 
         processArgsAndStdin(cmndArgs, process)
