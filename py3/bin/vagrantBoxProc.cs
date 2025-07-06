@@ -84,6 +84,15 @@ from bisos.common import csParam
 import collections
 ####+END:
 
+import typing
+import sys
+
+
+if b.cs.G.plantOfThisSeed is not None:
+    from bisos.b import cmndsSeed
+    b.importFileAs('plantedCsu', b.cs.G.plantOfThisSeed, __file__, __name__)
+
+
 """ #+begin_org
 *  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CsFrmWrk   [[elisp:(outline-show-subtree+toggle)][||]] ~csuList emacs-list Specifications~  [[elisp:(blee:org:code-block/above-run)][ /Eval Below/ ]] [[elisp:(org-cycle)][| ]]
 #+BEGIN_SRC emacs-lisp
@@ -95,15 +104,16 @@ import collections
    "bisos.b.clsMethod_csu"
    "bisos.debian.configFile"
    "bisos.vagrantBaseBoxes.vagBoxes_csu"
+   "plantedCsu"
  ))
 #+END_SRC
 #+RESULTS:
-| bisos.b.cs.ro | bisos.csPlayer.bleep | bisos.common.commonCsParams | bisos.b.clsMethod_csu | bisos.debian.configFile | bisos.vagrantBaseBoxes.vagBoxes_csu |
+| bisos.b.cs.ro | bisos.csPlayer.bleep | bisos.common.commonCsParams | bisos.b.clsMethod_csu | bisos.debian.configFile | bisos.vagrantBaseBoxes.vagBoxes_csu | plantedCsu |
 #+end_org """
 
-####+BEGIN: b:py3:cs:framework/csuListProc :pyImports t :csuImports t :csuParams t :csmuParams nil
+####+BEGINNOT: b:py3:cs:framework/csuListProc :pyImports t :csuImports t :csuParams t :csmuParams nil
 """ #+begin_org
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CsFrmWrk   [[elisp:(outline-show-subtree+toggle)][||]] =Process CSU List= with /6/ in csuList pyImports=t csuImports=t csuParams=t
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CsFrmWrk   [[elisp:(outline-show-subtree+toggle)][||]] =Process CSU List= with /7/ in csuList pyImports=t csuImports=t csuParams=t
 #+end_org """
 
 from bisos.b.cs import ro
@@ -114,7 +124,10 @@ from bisos.debian import configFile
 from bisos.vagrantBaseBoxes import vagBoxes_csu
 
 
-csuList = [ 'bisos.b.cs.ro', 'bisos.csPlayer.bleep', 'bisos.common.commonCsParams', 'bisos.b.clsMethod_csu', 'bisos.debian.configFile', 'bisos.vagrantBaseBoxes.vagBoxes_csu', ]
+csuList = [ 'bisos.b.cs.ro', 'bisos.csPlayer.bleep', 'bisos.common.commonCsParams', 'bisos.b.clsMethod_csu', 'bisos.debian.configFile', 'bisos.vagrantBaseBoxes.vagBoxes_csu', 'plantedCsu', ]
+
+if b.cs.G.plantOfThisSeed is None:
+    csuList.remove('plantedCsu')
 
 g_importedCmndsModules = cs.csuList_importedModules(csuList)
 
@@ -176,7 +189,20 @@ class examples(cs.Cmnd):
         cs.examples.myName(cs.G.icmMyName(), cs.G.icmMyFullName())
         cs.examples.commonBrief()
 
-        vagBoxes_csu.examples_csu().pyCmnd()
+        if b.cs.G.plantOfThisSeed is None:
+            vagBoxes_csu.examples_csu().pyCmnd()
+        else:
+            vagBoxes_csu.examples_seed().pyCmnd()
+
+            examplesFuncsList = cmndsSeed.cmndsSeedInfo.examplesFuncsList
+            if examplesFuncsList is not None:
+                for each in examplesFuncsList:
+                    each()
+            else:
+                examplesCsu = cmndsSeed.examplesOfPlantedCsu()
+                if examplesCsu is not None:
+                    examplesCsu()
+
 
         return(cmndOutcome)
 

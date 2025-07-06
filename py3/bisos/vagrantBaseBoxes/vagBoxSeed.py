@@ -83,6 +83,8 @@ import collections
 
 import atexit
 
+seedCSMU = 'vagrantBoxProc.cs'
+
 ####+BEGIN: bx:cs:py3:section :title "Public Classes"
 """ #+begin_org
 *  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  /Section/    [[elisp:(outline-show-subtree+toggle)][||]] *Public Classes*  [[elisp:(org-cycle)][| ]]
@@ -183,7 +185,8 @@ def plantWithWhich(
 ** [[elisp:(org-cycle)][| *DocStr | ] shim over b.importFile.plantWithWhich
     #+end_org """
 
-    expected = 'seedVagBox.cs'
+    # expected = 'seedVagBox.cs'
+    expected = seedCSMU
 
     if asExpected != expected:
         b_io.pr(f"plantWithWhich:: Expected {expected} Got: {asExpected}")
@@ -199,7 +202,8 @@ def plantWithWhich(
 @atexit.register
 def atexit_plantWithWhich(
 ####+END:
-        asExpected: str="seedVagBox.cs",
+        # asExpected: str="seedVagBox.cs",
+        asExpected: str=seedCSMU,
 ) -> None:
     """ #+begin_org
 ** [[elisp:(org-cycle)][| *DocStr | ] shim over b.importFile.plantWithWhich

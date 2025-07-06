@@ -43,7 +43,7 @@ def longDescription():
 # b:py3:pypi:setup/version Arguments  :forSys t :forPyPi t :constant "666"
 ####+BEGIN: b:py3:pypi:setup/version :comment "Auto Detected"
 
-# ./pypiUploadVer DID NOT exist -- forPypiVersion=0.21 -- forLocalVersion=0.1 -- constant=NA
+# ./pypiUploadVer DID NOT exist -- forPypiVersion=0.23 -- forLocalVersion=0.1 -- constant=NA
 def pkgVersion():
         return '0.1'
 
@@ -69,7 +69,6 @@ requires = [
 
 scripts = [
 'bin/exmpl-vagBox.cs',
-'bin/seedVagBox.cs',
 'bin/vagrantBaseBoxes-sbom.cs',
 'bin/vagrantBoxProc.cs',
 'bin/vagrantCommonCmnds.cs',

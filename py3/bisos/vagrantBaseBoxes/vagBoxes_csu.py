@@ -228,6 +228,8 @@ class examples_csu(cs.Cmnd):
              wrapper=f"find  {oneDebianBaseBoxes} -print | grep pkr.hcl | ",
              )
 
+        cs.examples.menuChapter('=Compound Commands=')
+
         cs.examples.menuSection('/vagBoxPath --- BUILD+ADD Compound Commands/')
         
         cmnd('vagBoxPath_buildAdd',  args=oneVagBoxPath)
@@ -334,7 +336,9 @@ class examples_seed(cs.Cmnd):
         cmnd = cs.examples.cmndEnter
         literal = cs.examples.execInsert
 
-        # Should be imported here, not at the top -- Otherwise atexit is triggered.
+        #
+        # Should be IMPORTED here, not at the top -- Otherwise atexit is triggered for ALL of the CSMU.
+        #
         from bisos.vagrantBaseBoxes import vagBoxSeed
 
         vagBoxList = vagBoxSeed.vagBoxSeedInfo.vagBoxList
@@ -371,6 +375,10 @@ class examples_seed(cs.Cmnd):
 
         for each in vagBoxList:
             cmnd('vagBoxPath_clean',  args=each)
+
+
+        cs.examples.menuChapter('=Compound Commands=')
+
 
         cs.examples.menuSection('/vagBoxPath --- BUILD+ADD Compound Commands/')
 

@@ -55,12 +55,12 @@ class symlinksToPoly(cs.Cmnd):
         # ln -s ../../../../../../poly/debian/13/netinst/13.trixie-netinst_us.pkr.hcl us.pkr.hcl
         polyBaseDir = "../../../../../../poly/debian/13/netinst"
 
-        pathPlus.symlink_update(f"{polyBaseDir}/13.trixie-netinst_us.pkr.hcl", "us.pkr.hcl",)
-        pathPlus.symlink_update(f"{polyBaseDir}/provision.sh", "provision.sh",)
-        pathPlus.symlink_update(f"{polyBaseDir}/preseed-deb13-us.txt", "preseed-deb13-us.txt",)
-        pathPlus.symlink_update(f"{polyBaseDir}/provision-guest-additions.sh", "provision-guest-additions.sh",)
-        pathPlus.symlink_update(f"{polyBaseDir}/README.org", "README.org",)
-        pathPlus.symlink_update(f"{polyBaseDir}/Vagrantfile-uefi.template", "Vagrantfile-uefi.template",)
+        # pathPlus.symlink_update(f"{polyBaseDir}/13.trixie-netinst_us.pkr.hcl", "us.pkr.hcl",)
+        # pathPlus.symlink_update(f"{polyBaseDir}/provision.sh", "provision.sh",)
+        # pathPlus.symlink_update(f"{polyBaseDir}/preseed-deb13-us.txt", "preseed-deb13-us.txt",)
+        # pathPlus.symlink_update(f"{polyBaseDir}/provision-guest-additions.sh", "provision-guest-additions.sh",)
+        # pathPlus.symlink_update(f"{polyBaseDir}/README.org", "README.org",)
+        # pathPlus.symlink_update(f"{polyBaseDir}/Vagrantfile-uefi.template", "Vagrantfile-uefi.template",)
 
         return cmndOutcome.set(
             opError=b.op.OpError.Success,
