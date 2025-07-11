@@ -173,7 +173,7 @@ class examples_csu(cs.Cmnd):
 
         herePkrPath = "./us.pkr.hcl"
         oneVagBoxPath = "/bisos/git/bxRepos/bxObjects/bro_vagrantDebianBaseBoxes/qemu/debian/13/trixie/amd64/netinst/us.pkr.hcl"
-        oneDebianBaseBoxes = "/bisos/git/bxRepos/bxObjects/bro_vagrantDebianBaseBoxes"
+        oneDebianBaseBoxes = "/bisos/git/bxRepos/bxObjects/bro_vagrantDebianBaseBoxes/qemu"
 
         forceModePars = od([('force', 't'),])
         infoLogPars = od([('verbosity', '20'),])        

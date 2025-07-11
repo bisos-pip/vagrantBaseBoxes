@@ -111,7 +111,7 @@ if b.cs.G.plantOfThisSeed is not None:
 | bisos.b.cs.ro | bisos.csPlayer.bleep | bisos.common.commonCsParams | bisos.b.clsMethod_csu | bisos.debian.configFile | bisos.vagrantBaseBoxes.vagBoxes_csu | plantedCsu |
 #+end_org """
 
-####+BEGINNOT: b:py3:cs:framework/csuListProc :pyImports t :csuImports t :csuParams t :csmuParams nil
+####+BEGIN: b:py3:cs:framework/csuListProc :pyImports t :csuImports t :csuParams t :csmuParams nil
 """ #+begin_org
 *  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CsFrmWrk   [[elisp:(outline-show-subtree+toggle)][||]] =Process CSU List= with /7/ in csuList pyImports=t csuImports=t csuParams=t
 #+end_org """
@@ -122,7 +122,6 @@ from bisos.common import commonCsParams
 from bisos.b import clsMethod_csu
 from bisos.debian import configFile
 from bisos.vagrantBaseBoxes import vagBoxes_csu
-
 
 csuList = [ 'bisos.b.cs.ro', 'bisos.csPlayer.bleep', 'bisos.common.commonCsParams', 'bisos.b.clsMethod_csu', 'bisos.debian.configFile', 'bisos.vagrantBaseBoxes.vagBoxes_csu', 'plantedCsu', ]
 
