@@ -24,7 +24,7 @@ implementation. It is a BISOS-Capability and a Standalone-BISOS-Package.
 
 The driven approach involves separation of packer specifications from the
 bisos.vagrantBaseBoxes package. BISOS related packer specifications that can be
-processed with bisos.vagrantBaseBoxes are at:\
+processed with bisos.vagrantBaseBoxes are at:\\
 [[https://github.com/bxObjects/bro_vagrantDebianBaseBoxes]]
 
 #+BEGIN: b:org:pypi:readme/pkgDocumentation :pkgName "capability-cs" :comment "basic"
@@ -39,7 +39,7 @@ processed with bisos.vagrantBaseBoxes are at:\
 - [[#prior-art-and-similar-art][Prior Art and Similar Art]]
 - [[#strategy-of-separating-bisosvagrantbaseboxes-package-from-its-data-packer-base-box-specifications][Strategy of Separating bisos.vagrantBaseBoxes Package From Its Data (packer base box specifications)]]
   - [[#user-orientation-strategy][User Orientation Strategy]]
-  - [[#framework-for-consolidation-of-base-boxes-strategy][Framework for Consolidation of Base Boxes Strategy]]
+  - [[#base-box-consolidation-strategy][Base Box Consolidation Strategy]]
   - [[#bisos-vagrant-debian-base-boxes-packer-specifications][BISOS Vagrant Debian Base Boxes Packer Specifications]]
 - [[#installation-of-bisosvagrantbaseboxes-package][Installation of bisos.vagrantBaseBoxes Package]]
   - [[#installation-with-pip][Installation With pip]]
@@ -51,7 +51,7 @@ processed with bisos.vagrantBaseBoxes are at:\
   - [[#build-add-run-and-then-clean-a-specific-base-box-with-vagboxcs-a-planted-vagrantboxproccs-seed][Build, Add, Run and then Clean a Specific Base Box with vagBox.cs (a planted vagrantBoxProc.cs seed)]]
 - [[#bisos-use-of-built-vagrant-boxes][BISOS Use of Built Vagrant Boxes]]
 - [[#support][Support]]
-- [[#planned-improvements][Planned Improvements]]
+- [[#some-relevant-pointers][Some Relevant Pointers]]
 
 * Standalone Piece of BISOS --- ByStar Internet Services Operating System
 
@@ -73,7 +73,7 @@ Use of Vagrant Base Boxes is quite common.
 
 The model of using existing base boxes by downloading them from the web is
 problematic for us, as it involves a level of trust which we consider unnecessary.
-Hashicorp provides a collection of boxes at:\
+Hashicorp provides a collection of boxes at:\\
 https://developer.hashicorp.com/vagrant/docs/boxes
 
 Many others, like us prefer to always build their own boxes. Many open-source
@@ -107,6 +107,7 @@ The strategy of separating bisos.vagrantBaseBoxes package from its data targets 
    of convergence for all similar such efforts. Those wishing to add more OSes and
    more providers should be able to plug their specifications into our model.
 
+Trust, reproducibility and transparency drive these goals.
 We expand on our strategy for accomplishing the above goals below.
 
 ** User Orientation Strategy
@@ -116,21 +117,21 @@ run bisos.vagrantBaseBoxes on a base box specification dedicated to that
 specific profile. Without any additional complexities that come from the
 conveniences of the producer of the multi-environment base box specification.
 
-For the example of qemu+debian-13+netinst+us, consider the content of:\
+For the example of qemu+debian-13+netinst+us, consider the content of:\\
 https://github.com/bxObjects/bro_vagrantDebianBaseBoxes/tree/main/qemu/debian/13/trixie/amd64/netinst
 
-The us.pkr.hcl file is a symlink to:\
+The us.pkr.hcl file is a symlink to:\\
 ../../../../../../poly/debian/13/netinst/13.trixie-netinst_us.pkr.hcl
 which points to the base for multi-configuration of this specific base box specification.
 
-The management of the relative symlinks and execution of the build process is wrapped in:\
+The management of the relative symlinks and execution of the build process is wrapped in:\\
 https://github.com/bxObjects/bro_vagrantDebianBaseBoxes/blob/main/qemu/debian/13/trixie/amd64/netinst/vagBox.cs
 
 vagBox.cs is a planted CS (Command Service) whose seed is bisos.vagrantBaseBoxes's vagrantBoxProc.cs.
 
-** Framework for Consolidation of Base Boxes Strategy
+** Base Box Consolidation Strategy
 
-Using again, the example of qemu+debian-13+netinst+us, consider the directory:\
+Using again, the example of qemu+debian-13+netinst+us, consider the directory:\\
 https://github.com/bxObjects/bro_vagrantDebianBaseBoxes/tree/main/qemu/debian/13/trixie/amd64/netinst
 
 in https://github.com/bxObjects/bro_vagrantDebianBaseBoxes
@@ -141,7 +142,7 @@ Notice the hierarchies of "qemu/debian/13/trixie/amd64/netinst" and "poly/debian
 The "poly/debian/13/netinst" is multi-environment convenience of the developer and contains the symlink destinations
 of "qemu/debian/13/trixie/amd64/netinst".
 
-Notice the hierarchy of "qemu/debian/13/trixie/amd64/netinst/us.pkr.hcl" corresponding to:\
+Notice the hierarchy of "qemu/debian/13/trixie/amd64/netinst/us.pkr.hcl" corresponding to:\\
 <provider>/<distro>/<majorRelease>/<minorRelease>/<cpuArch>/<boxType>/<boxSelector>
 
 Based on the above generalized hierarchy, other base boxes of any type and any
@@ -294,9 +295,32 @@ author/maintainer\\
 [[http://mohsen.1.banan.byname.net/contact]]
 
 
-* Planned Improvements
+* Some Relevant Pointers
 
-- Fully absorb all of lcaVagrantXX.sh
+1. **Vagrant Cloud by HashiCorp**:
+   - [[https://app.vagrantup.com/][Vagrant Cloud]]
+
+2. **Bento**:
+   - [[https://github.com/chef/bento][Bento on GitHub]]
+
+3. **Boxcutter**:
+   - [[https://github.com/boxcutter][Boxcutter on GitHub]]
+
+4. **Veewee**:
+   - [[https://github.com/jedi4ever/veewee][Veewee on GitHub]]
+
+5. **Packer Templates by Parallels**:
+   - [[https://github.com/Parallels/vagrant-parallels][Parallels Packer Templates]]
+
+6. **osboxes.org**:
+   - [[https://www.osboxes.org/][osboxes.org]]
+
+7. **Vagrant Setup by Jeff Geerling**:
+   - [[https://github.com/geerlingguy/packer-boxes][Jeff Geerling's Vagrant Setup on GitHub]]
+
+8. **Vagrantbox.es**:
+   - [[https://www.vagrantbox.es/][Vagrantbox.es]]
+
 
 # Local Variables:
 # eval: (setq-local toc-org-max-depth 4)
