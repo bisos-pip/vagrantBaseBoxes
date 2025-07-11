@@ -22,9 +22,9 @@ Vagrant Packer Base Boxes.
 implementation. It is a BISOS-Capability and a Standalone-BISOS-Package.
 
 
-The driven approach involves separation of packer specifications from the
-bisos.vagrantBaseBoxes package. BISOS related packer specifications that can be
-processed with bisos.vagrantBaseBoxes are at:\\
+The data-driven approach separates the packer specifications from the
+bisos.vagrantBaseBoxes package. BISOS-related packer specifications that can be
+processed with bisos.vagrantBaseBoxes are available at:\
 [[https://github.com/bxObjects/bro_vagrantDebianBaseBoxes]]
 
 #+BEGIN: b:org:pypi:readme/pkgDocumentation :pkgName "capability-cs" :comment "basic"
@@ -35,7 +35,7 @@ processed with bisos.vagrantBaseBoxes are at:\\
 
 * Table of Contents     :TOC:
 - [[#overview][Overview]]
-- [[#standalone-piece-of-bisos-----bystar-internet-services-operating-system][Standalone Piece of BISOS --- ByStar Internet Services Operating System]]
+- [[#a-standalone-piece-of-bisos-----bystar-internet-services-operating-system][A Standalone Piece of BISOS --- ByStar Internet Services Operating System]]
 - [[#prior-art-and-similar-art][Prior Art and Similar Art]]
 - [[#strategy-of-separating-bisosvagrantbaseboxes-package-from-its-data-packer-base-box-specifications][Strategy of Separating bisos.vagrantBaseBoxes Package From Its Data (packer base box specifications)]]
   - [[#user-orientation-strategy][User Orientation Strategy]]
@@ -53,7 +53,7 @@ processed with bisos.vagrantBaseBoxes are at:\\
 - [[#support][Support]]
 - [[#some-relevant-pointers][Some Relevant Pointers]]
 
-* Standalone Piece of BISOS --- ByStar Internet Services Operating System
+* A Standalone Piece of BISOS --- ByStar Internet Services Operating System
 
 Layered on top of Debian, *BISOS*: (By* Internet Services Operating System) is a
 unified and universal framework for developing both internet services and
@@ -297,29 +297,16 @@ author/maintainer\\
 
 * Some Relevant Pointers
 
-1. **Vagrant Cloud by HashiCorp**:
-   - [[https://app.vagrantup.com/][Vagrant Cloud]]
-
-2. **Bento**:
-   - [[https://github.com/chef/bento][Bento on GitHub]]
-
-3. **Boxcutter**:
-   - [[https://github.com/boxcutter][Boxcutter on GitHub]]
-
-4. **Veewee**:
-   - [[https://github.com/jedi4ever/veewee][Veewee on GitHub]]
-
-5. **Packer Templates by Parallels**:
-   - [[https://github.com/Parallels/vagrant-parallels][Parallels Packer Templates]]
-
-6. **osboxes.org**:
-   - [[https://www.osboxes.org/][osboxes.org]]
-
-7. **Vagrant Setup by Jeff Geerling**:
-   - [[https://github.com/geerlingguy/packer-boxes][Jeff Geerling's Vagrant Setup on GitHub]]
-
-8. **Vagrantbox.es**:
-   - [[https://www.vagrantbox.es/][Vagrantbox.es]]
+| **Resource**                     | **Link**                                  |
+|--------------------------------+-----------------------------------------|
+| Vagrant Cloud by HashiCorp     | [[https://app.vagrantup.com/][Vagrant Cloud]]                           |
+| Bento                          | [[https://github.com/chef/bento][Bento on GitHub]]                         |
+| Boxcutter                      | [[https://github.com/boxcutter][Boxcutter on GitHub]]                     |
+| Veewee                         | [[https://github.com/jedi4ever/veewee][Veewee on GitHub]]                        |
+| Packer Templates by Parallels  | [[https://github.com/Parallels/vagrant-parallels][Parallels Packer Templates]]              |
+| osboxes.org                    | [[https://www.osboxes.org/][osboxes.org]]                             |
+| Vagrant Setup by Jeff Geerling | [[https://github.com/geerlingguy/packer-boxes][Jeff Geerling's Vagrant Setup on GitHub]] |
+| Vagrantbox.es                  | [[https://www.vagrantbox.es/][Vagrantbox.es]]                           |
 
 
 # Local Variables:
