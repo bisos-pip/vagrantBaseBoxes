@@ -52,8 +52,8 @@ bisos.vagrantBaseBoxes are available at:\\
   - [[#build-add-run-and-then-clean-all-base-boxes-with-vagrantboxproccs][Build, Add, Run and then Clean All Base Boxes with vagrantBoxProc.cs]]
   - [[#build-add-run-and-then-clean-a-specific-base-box-with-vagboxcs-a-planted-vagrantboxproccs-seed][Build, Add, Run and then Clean a Specific Base Box with vagBox.cs (a planted vagrantBoxProc.cs seed)]]
 - [[#bisos-use-of-built-vagrant-boxes][BISOS Use of Built Vagrant Boxes]]
-- [[#support][Support]]
 - [[#some-relevant-pointers][Some Relevant Pointers]]
+- [[#support][Support]]
 
 * A Standalone Piece of BISOS --- ByStar Internet Services Operating System
 
@@ -325,19 +325,11 @@ to become "Raw-BISOS". This process is described in: https://github.com/bxgenesi
 Based on a platform BPO (ByStar Portable Object), Raw-BISOS can then be further augmented to become a
 reproducible specific BISOS-Platform.
 
-* Support
-
-For support, criticism, comments, and questions, please contact the
-author/maintainer\\
-[[http://mohsen.1.banan.byname.net][Mohsen Banan]] at:
-[[http://mohsen.1.banan.byname.net/contact]]
-
-
 * Some Relevant Pointers
 
-<<Some relevant pointers>> are included:
+Some relevant pointers are included:
 
-| **Resource**                     | **Link**                                  |
+| *Resource*                       | *Link*                                    |
 |--------------------------------+-----------------------------------------|
 | Vagrant Cloud by HashiCorp     | [[https://app.vagrantup.com/][Vagrant Cloud]]                           |
 | Bento                          | [[https://github.com/chef/bento][Bento on GitHub]]                         |
@@ -346,7 +338,14 @@ author/maintainer\\
 | Packer Templates by Parallels  | [[https://github.com/Parallels/vagrant-parallels][Parallels Packer Templates]]              |
 | osboxes.org                    | [[https://www.osboxes.org/][osboxes.org]]                             |
 | Vagrant Setup by Jeff Geerling | [[https://github.com/geerlingguy/packer-boxes][Jeff Geerling's Vagrant Setup on GitHub]] |
-| Vagrantbox.es                  | [[https://www.vagrantbox.es/][Vagrantbox.es]]                           |
+| rgl/debian-vagrant             | https://github.com/rgl/debian-vagrant   |
+
+* Support
+
+For support, criticism, comments, and questions, please contact the
+author/maintainer\\
+[[http://mohsen.1.banan.byname.net][Mohsen Banan]] at:
+[[http://mohsen.1.banan.byname.net/contact]]
 
 
 # Local Variables:
