@@ -58,11 +58,11 @@ processed with bisos.vagrantBaseBoxes are available at:\\
 
 * A Standalone Piece of BISOS --- ByStar Internet Services Operating System
 
-Layered on top of Debian, [[https://github.com/bisos][*BISOS*]]: (By* Internet Services Operating System) is a
+Layered on top of Debian, [[https://github.com/bisos][BISOS]]: (By* Internet Services Operating System) is a
 unified and universal framework for developing both internet services and
 software-service continuums that use internet services. See [[https://github.com/bxGenesis/start][Bootstrapping
 ByStar, BISOS and Blee]] for information about getting started with BISOS.\\
-*BISOS* is a foundation for [[https://github.com/mohsenBanan][*The Libre-Halaal ByStar Digital Ecosystem*]] which is
+*BISOS* is a foundation for [[https://github.com/mohsenBanan][The Libre-Halaal ByStar Digital Ecosystem]] which is
 described as a cure for losses of autonomy and privacy in a book titled: [[https://github.com/bxplpc/120033][Nature
 of Polyexistentials]].
 
@@ -343,7 +343,7 @@ Some relevant pointers are included:
 
 * Best Developed With Blee
 
-[[https://github.com/bx-blee][*Blee*]]", /By* BISOS Libre-Halaal Emacs Environment/
+[[https://github.com/bx-blee][Blee]]", /By* BISOS Libre-Halaal Emacs Environment/
 is a layer on top of Emacs and BISOS which creates a
 comprehensive integrated usage and development environment. Blee and BISOS are intertwined.
 
