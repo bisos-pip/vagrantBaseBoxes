@@ -1,12 +1,17 @@
 #+title: bisos.vagrantBaseBoxes: Facilities for Creating and Managing Vagrant Packer Base Boxes
+#+DATE: <2024-02-19 Mon 16:27>
+#+AUTHOR: Mohsen BANAN
+#+OPTIONS: toc:4
 
+#+BEGIN: b:org:pypi:readme/topControls :pkgName "vagrantBaseBoxes" :comment "basic"
 
 |----------------------+------------------------------------------------------------------|
 | ~Blee Panel Controls~: | [[elisp:(show-all)][Show-All]] : [[elisp:(org-shifttab)][Overview]] : [[elisp:(progn (org-shifttab) (org-content))][Content]] : [[elisp:(delete-other-windows)][(1)]] : [[elisp:(progn (save-buffer) (kill-buffer))][S&Q]] : [[elisp:(save-buffer)][Save]]  : [[elisp:(kill-buffer)][Quit]]  : [[elisp:(bury-buffer)][Bury]] |
-| ~Panel Links~:         | [[file:./panels/bisos.facter/_nodeBase_/fullUsagePanel-en.org][Repo Blee Panel]] --  [[file:/bisos/git/auth/bxRepos/bisos-pip/facter/panels/bisos.facter/_nodeBase_/fullUsagePanel-en.org][Blee Panel]]                                                |
+| ~Panel Links~:         | [[file:./py3/panels/bisos.facter/_nodeBase_/fullUsagePanel-en.org][Repo Blee Panel]] --  [[file:/bisos/git/auth/bxRepos/bisos-pip/facter/py3/panels/bisos.facter/_nodeBase_/fullUsagePanel-en.org][Blee Panel]]                                                |
 | ~See Also~:            | [[https://pypi.org/project/bisos.facter][At PYPI]] : [[https://github.com/bisos-pip/pycs][bisos.PyCS]]                                             |
 |----------------------+------------------------------------------------------------------|
 
+#+END:
 
 * Overview
 
@@ -23,7 +28,10 @@ for wide usage. BISOS-related packer specifications that can be processed with
 bisos.vagrantBaseBoxes are available at:\\
 [[https://github.com/bxObjects/bro_vagrantDebianBaseBoxes]]
 
+#+BEGIN: b:org:pypi:readme/pkgDocumentation :pkgName "capability-cs" :comment "basic"
 
+# PYPI Documentation Comes Here in _description.org
+#+END:
 
 
 * Table of Contents     :TOC:
@@ -179,3 +187,6 @@ author/maintainer\\
 
 
 
+# Local Variables:
+# eval: (setq-local toc-org-max-depth 4)
+# End:

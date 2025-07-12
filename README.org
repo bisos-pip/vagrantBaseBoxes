@@ -42,6 +42,7 @@ bisos.vagrantBaseBoxes are available at:\\
   - [[#user-orientation-strategy][User Orientation Strategy]]
   - [[#base-box-consolidation-strategy][Base Box Consolidation Strategy]]
   - [[#bisos-vagrant-debian-base-boxes-packer-specifications][BISOS Vagrant Debian Base Boxes Packer Specifications]]
+- [[#structure-of-packer-base-box-specifications][Structure of Packer Base Box Specifications]]
 - [[#installation-of-bisosvagrantbaseboxes-package][Installation of bisos.vagrantBaseBoxes Package]]
   - [[#installation-with-pip][Installation With pip]]
   - [[#installation-with-pipx][Installation With pipx]]
@@ -173,6 +174,40 @@ Of course, you can clone that repo anywhere (the /bisos/git/bxRepos/bxObjects is
 BISOS specific) and then just adjust the command line path to it when running
 vagrantBoxProc.cs.
 
+
+
+* Structure of Packer Base Box Specifications
+
+For base box specifications, the structure of qemu in the bro_vagrantDebianBaseBoxes repo is:\\
+<publisher>/<provider>/<distro>/<majorRelease>/<minorRelease>/<cpuArch>/<boxCapability>/<boxSelector>
+
+Here are some concrete mappings:
+
+| <publisher>     | bro_vagrantDebianBaseBoxes | bx  | vagrantBaseBoxes is aware of abbrevs     |
+| <provider>      | qemu                       |     | perhaps virtualbox later                 |
+| <distro>        | debian                     | deb | perhaps ubuntu later                     |
+| <majorRelease>  | 13                         |     | 13 and 12 currently                      |
+| <minorRelease>  | trixie                     |     | Prior to release we go by name           |
+| <cpuArch>       | amd64                      |     | For now just amd64                       |
+| <boxCapability> | netinst                    |     | Refers to boxes content and capabilities |
+| <boxSelector>   | us                         |     | Variations on capability, eg US keyboard |
+
+The above, describes the hierarchy of qemu in this repo which reflects the perspective of the user.
+
+The developer perspective is reflected in the poly hierarchy.
+The structure of poly in the bro_vagrantDebianBaseBoxes repo is:\\
+<publisher>/poly/<distro>/<majorRelease>/<boxCapability>
+
+Here are some concrete mappings:
+
+| <publisher>     | bro_vagrantDebianBaseBoxes | vagrantBaseBoxes is aware of abbrevs     |
+| poly            | poly                       |                 |
+| <distro>        | debian                     | perhaps ubuntu later                     |
+| <majorRelease>  | 13                         | 13 and 12 currently                      |
+| <boxCapability> | netinst                    | Refers to boxes content and capabilities |
+
+The "<boxCapability>" (eg netinst) contains information for configuration of
+multiple environments.
 
 * Installation of bisos.vagrantBaseBoxes Package
 

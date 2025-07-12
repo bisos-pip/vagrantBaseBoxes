@@ -273,17 +273,23 @@ class examples_csu(cs.Cmnd):
         cs.examples.menuSection('/vagBoxPath --- BUILD+ADD+RUN+CLEAN Compound Commands/')
 
         cmnd('vagBoxPath_buildAddRunClean',  args=oneVagBoxPath)
-        cmnd('vagBoxPath_buildAddRunClean',
-             wrapper=f"find  {oneDebianBaseBoxes} -print | grep pkr.hcl | ",
-             )
-
         cmnd('vagBoxPath_buildAddRunClean', pars=forceModePars, args=herePkrPath)
         cmnd('vagBoxPath_buildAddRunClean', pars=forceModePars, args=oneVagBoxPath)
-        cmnd('vagBoxPath_buildAddRunClean',
-             pars=forceModePars,
-             wrapper=f"find  {oneDebianBaseBoxes} -print | grep pkr.hcl | ",
-             )
 
+        cs.examples.menuSection('/Apply to *ALL* BUILD+ADD+RUN+CLEAN/')
+
+        cmnd('vagBoxPath_buildAddRun',
+             wrapper=f"find  {oneDebianBaseBoxes} -print | grep pkr.hcl | ",
+             pars=forceModePars,
+             )
+        cmnd('vagBoxPath_clean',
+             wrapper=f"find  {oneDebianBaseBoxes} -print | grep pkr.hcl | ",
+             pars=forceModePars,
+             )
+        cmnd('vagBoxPath_buildAddRunClean',
+             wrapper=f"find  {oneDebianBaseBoxes} -print | grep pkr.hcl | ",
+             pars=forceModePars,
+             )
 
         cs.examples.menuSection('/Commands for Development/')
 
