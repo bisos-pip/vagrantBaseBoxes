@@ -47,13 +47,13 @@ processed with bisos.vagrantBaseBoxes are available at:\\
   - [[#installation-with-pip][Installation With pip]]
   - [[#installation-with-pipx][Installation With pipx]]
 - [[#usage-of-bisosvagrantbaseboxes-package][Usage of bisos.vagrantBaseBoxes Package]]
-  - [[#first-install-the-packer-box-specifications][First Install the packer box specifications.]]
+  - [[#first-install-the-packer-box-specifications][First, Install the packer box specifications]]
   - [[#vagrantboxproccs-menu][vagrantBoxProc.cs Menu]]
   - [[#build-add-run-and-then-clean-all-base-boxes-with-vagrantboxproccs][Build, Add, Run and then Clean All Base Boxes with vagrantBoxProc.cs]]
   - [[#build-add-run-and-then-clean-a-specific-base-box-with-vagboxcs-a-planted-vagrantboxproccs-seed][Build, Add, Run and then Clean a Specific Base Box with vagBox.cs (a planted vagrantBoxProc.cs seed)]]
 - [[#bisos-use-of-built-vagrant-boxes][BISOS Use of Built Vagrant Boxes]]
-- [[#some-relevant-pointers][Some Relevant Pointers]]
 - [[#best-developed-with-blee][Best Developed With Blee]]
+- [[#some-relevant-pointers][Some Relevant Pointers]]
 - [[#support][Support]]
 
 * A Standalone Piece of BISOS --- ByStar Internet Services Operating System
@@ -61,7 +61,7 @@ processed with bisos.vagrantBaseBoxes are available at:\\
 Layered on top of Debian, [[https://github.com/bisos][BISOS]]: (By* Internet Services Operating System) is a
 unified and universal framework for developing both internet services and
 software-service continuums that use internet services. See [[https://github.com/bxGenesis/start][Bootstrapping
-ByStar, BISOS and Blee]] for information about getting started with BISOS.\\
+ByStar, BISOS and Blee]] for additional information.
 *BISOS* is a foundation for [[https://github.com/mohsenBanan][The Libre-Halaal ByStar Digital Ecosystem]] which is
 described as a cure for losses of autonomy and privacy in a book titled: [[https://github.com/bxplpc/120033][Nature
 of Polyexistentials]].
@@ -82,8 +82,8 @@ https://developer.hashicorp.com/vagrant/docs/boxes
 Many others, like us prefer to always build their own boxes. Many open-source
 projects and individual developers host their Vagrantfile configurations and
 associated files (like provisioning scripts) on GitHub. These repositories allow
-others to easily replicate their development or testing environments.
-Bento, Boxcutter, osboxes and Veewee are jut few examples on github.
+others to easily replicate their testing, development or production environments.
+Bento, Boxcutter, osboxes and Veewee are just few examples on github.
 See "Some Relevant Pointers" section below for more.
 
 We want to consolidate and canonicalize building of vagrant base boxes to avoid
@@ -125,7 +125,7 @@ conveniences of the producer of the multi-environment base box specification.
 For the example of qemu+debian-13+netinst+us, consider the content of:\\
 https://github.com/bxObjects/bro_vagrantDebianBaseBoxes/tree/main/qemu/debian/13/trixie/amd64/netinst
 
-The us.pkr.hcl file is a symlink to:\\
+In that directory, the us.pkr.hcl file is a symlink to:\\
 ../../../../../../poly/debian/13/netinst/13.trixie-netinst_us.pkr.hcl
 which points to the base for multi-configuration of this specific base box specification.
 
@@ -138,14 +138,13 @@ vagBox.cs is a planted CS (Command Service) whose seed is bisos.vagrantBaseBoxes
 
 Using again, the example of qemu+debian-13+netinst+us, consider the directory:\\
 https://github.com/bxObjects/bro_vagrantDebianBaseBoxes/tree/main/qemu/debian/13/trixie/amd64/netinst
+which is dedicated to Vagrant Debian BaseBoxes in https://github.com/bxObjects/bro_vagrantDebianBaseBoxes.
 
-in https://github.com/bxObjects/bro_vagrantDebianBaseBoxes
-which is dedicated to Vagrant Debian BaseBoxes.
+Notice the hierarchies of "qemu/debian/13/trixie/amd64/netinst" and "poly/debian/13/netinst" in that repo.
 
-Notice the hierarchies of "qemu/debian/13/trixie/amd64/netinst" and "poly/debian/13/netinst".
-
-The "poly/debian/13/netinst" is multi-environment convenience of the developer and contains the symlink destinations
-of "qemu/debian/13/trixie/amd64/netinst".
+The "poly/debian/13/netinst" is multi-environment, which is for the convenience
+of the developer and contains the symlink destinations of
+"qemu/debian/13/trixie/amd64/netinst".
 
 Notice the hierarchy of "qemu/debian/13/trixie/amd64/netinst/us.pkr.hcl" corresponding to:\\
 <provider>/<distro>/<majorRelease>/<minorRelease>/<cpuArch>/<boxType>/<boxSelector>
@@ -162,9 +161,7 @@ consolidation of buildable vagrant base boxes.
 
 
 In BISOS, the packer base box specifications are in the form of a
-BISOS Repo Object (BRO). The github url for the BRO is:
-
-In BISOS, the defaults are:
+BISOS Repo Object (BRO). In BISOS, the defaults are:
 
 #+begin_src bash
 cd /bisos/git/bxRepos/bxObjects
@@ -174,8 +171,6 @@ git clone https://github.com/bxObjects/bro_vagrantDebianBaseBoxes.git
 Of course, you can clone that repo anywhere (the /bisos/git/bxRepos/bxObjects is
 BISOS specific) and then just adjust the command line path to it when running
 vagrantBoxProc.cs.
-
-
 
 * Structure of Packer Base Box Specifications
 
@@ -195,7 +190,7 @@ Here are some concrete mappings:
 
 The above, describes the hierarchy of qemu in this repo which reflects the perspective of the user.
 
-The developer perspective is reflected in the poly hierarchy.
+The developer perspective is reflected in the "*poly*" hierarchy.
 The structure of poly in the bro_vagrantDebianBaseBoxes repo is:\\
 <publisher>/poly/<distro>/<majorRelease>/<boxCapability>
 
@@ -240,14 +235,13 @@ pipx install bisos.vagrantBaseBoxes
 
 The following commands are made available:
 - vagrantBaseBoxes-sbom.cs  (Software Bill of Material for vagrant and packer)
-- vagrantBoxProc.cs  (The primary command line for building, adding, running and cleaning base boxes.)\
-                     (Also a seed for vagBox.cs)
+- vagrantBoxProc.cs  (The primary command line for building, adding, running and cleaning base boxes which is also a seed for vagBox.cs)
 - exmpl-vagBox.cs    (Example for planting based on the vagrantBoxProc.cs as seed.)
 - vagrantCommonCmnds.cs  (A cheat sheet for common vagrant commands.)
 
 * Usage of bisos.vagrantBaseBoxes Package
 
-** First Install the packer box specifications.
+** First, Install the packer box specifications
 
 Clone the packer box specifications somewhere. Perhaps in your home directory.
 
@@ -256,7 +250,6 @@ git clone https://github.com/bxObjects/bro_vagrantDebianBaseBoxes.git
 #+end_src
 
 For BISOS we use the /bisos/git/bxRepos/bxObjects canonical directory as a base for cloning bro_vagrantDebianBaseBoxes.
-
 
 ** vagrantBoxProc.cs Menu
 
@@ -310,7 +303,7 @@ To Build, Add and Run just the us.pkr.hcl box, execute:
 vagBox.cs --force="t"  -i vagBoxPath_buildAddRun us.pkr.hcl
 #+end_src
 
-Next verify that your specific box has been built properly by visiting it as a VM.
+Next, verify that your specific box has been built properly by visiting it as a VM.
 
 To clean it -- git rid of the build artifacts and vagrant destroy the machines -- run:
 
@@ -326,29 +319,29 @@ to become "Raw-BISOS". This process is described in: https://github.com/bxgenesi
 Based on a platform BPO (ByStar Portable Object), Raw-BISOS can then be further augmented to become a
 reproducible specific BISOS-Platform.
 
-* Some Relevant Pointers
-
-Some relevant pointers are included:
-
-| *Resource*                       | *Link*                                    |
-|--------------------------------+-----------------------------------------|
-| Vagrant Cloud by HashiCorp     | [[https://app.vagrantup.com/][Vagrant Cloud]]                           |
-| Bento                          | [[https://github.com/chef/bento][Bento on GitHub]]                         |
-| Boxcutter                      | [[https://github.com/boxcutter][Boxcutter on GitHub]]                     |
-| Veewee                         | [[https://github.com/jedi4ever/veewee][Veewee on GitHub]]                        |
-| Packer Templates by Parallels  | [[https://github.com/Parallels/vagrant-parallels][Parallels Packer Templates]]              |
-| osboxes.org                    | [[https://www.osboxes.org/][osboxes.org]]                             |
-| Vagrant Setup by Jeff Geerling | [[https://github.com/geerlingguy/packer-boxes][Jeff Geerling's Vagrant Setup on GitHub]] |
-| rgl/debian-vagrant             | https://github.com/rgl/debian-vagrant   |
-
 * Best Developed With Blee
 
 [[https://github.com/bx-blee][Blee]]", /By* BISOS Libre-Halaal Emacs Environment/
 is a layer on top of Emacs and BISOS which creates a
 comprehensive integrated usage and development environment. Blee and BISOS are intertwined.
-
 This python package is developed with Blee. Its evolution is best accomplished
 through continued use of Blee.
+
+* Some Relevant Pointers
+
+Some relevant pointers are included:
+
+| *Resource*                     | *Link*                                                                                   |
+|--------------------------------+------------------------------------------------------------------------------------------|
+| Vagrant Cloud by HashiCorp     | [[https://app.vagrantup.com/][Vagrant Cloud]]                                            |
+| Bento                          | [[https://github.com/chef/bento][Bento on GitHub]]                                       |
+| Boxcutter                      | [[https://github.com/boxcutter][Boxcutter on GitHub]]                                    |
+| Veewee                         | [[https://github.com/jedi4ever/veewee][Veewee on GitHub]]                                |
+| Packer Templates by Parallels  | [[https://github.com/Parallels/vagrant-parallels][Parallels Packer Templates]]           |
+| osboxes.org                    | [[https://www.osboxes.org/][osboxes.org]]                                                |
+| Vagrant Setup by Jeff Geerling | [[https://github.com/geerlingguy/packer-boxes][Jeff Geerling's Vagrant Setup on GitHub]] |
+| rgl/debian-vagrant             | https://github.com/rgl/debian-vagrant                                                    |
+
 
 * Support
 
