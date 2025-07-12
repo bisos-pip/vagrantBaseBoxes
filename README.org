@@ -24,8 +24,8 @@ implementation. It is a BISOS-Capability and a Standalone-BISOS-Package.
 /bisos.vagrantBaseBoxes/ is data driven. By itself it is incomplete. It operates
 on well structured directories which contain packer base box specifications.
 Separating packer specifications from the bisos.vagrantBaseBoxes package allows
-for wide usage. BISOS-related packer specifications that can be processed with
-bisos.vagrantBaseBoxes are available at:\\
+for wide usage and expansion. BISOS-related packer specifications that can be
+processed with bisos.vagrantBaseBoxes are available at:\\
 [[https://github.com/bxObjects/bro_vagrantDebianBaseBoxes]]
 
 #+BEGIN: b:org:pypi:readme/pkgDocumentation :pkgName "capability-cs" :comment "basic"
@@ -53,17 +53,18 @@ bisos.vagrantBaseBoxes are available at:\\
   - [[#build-add-run-and-then-clean-a-specific-base-box-with-vagboxcs-a-planted-vagrantboxproccs-seed][Build, Add, Run and then Clean a Specific Base Box with vagBox.cs (a planted vagrantBoxProc.cs seed)]]
 - [[#bisos-use-of-built-vagrant-boxes][BISOS Use of Built Vagrant Boxes]]
 - [[#some-relevant-pointers][Some Relevant Pointers]]
+- [[#best-developed-with-blee][Best Developed With Blee]]
 - [[#support][Support]]
 
 * A Standalone Piece of BISOS --- ByStar Internet Services Operating System
 
-Layered on top of Debian, *BISOS*: (By* Internet Services Operating System) is a
+Layered on top of Debian, [[https://github.com/bisos][*BISOS*]]: (By* Internet Services Operating System) is a
 unified and universal framework for developing both internet services and
 software-service continuums that use internet services. See [[https://github.com/bxGenesis/start][Bootstrapping
 ByStar, BISOS and Blee]] for information about getting started with BISOS.\\
-*BISOS* is a foundation for *The Libre-Halaal ByStar Digital Ecosystem* which is
+*BISOS* is a foundation for [[https://github.com/mohsenBanan][*The Libre-Halaal ByStar Digital Ecosystem*]] which is
 described as a cure for losses of autonomy and privacy in a book titled: [[https://github.com/bxplpc/120033][Nature
-of Polyexistentials]]
+of Polyexistentials]].
 
 bisos.vagrantBaseBoxes is a standalone piece of BISOS. It can be used as a self-contained
 Python package separate from BISOS. Follow the installation and usage
@@ -339,6 +340,15 @@ Some relevant pointers are included:
 | osboxes.org                    | [[https://www.osboxes.org/][osboxes.org]]                             |
 | Vagrant Setup by Jeff Geerling | [[https://github.com/geerlingguy/packer-boxes][Jeff Geerling's Vagrant Setup on GitHub]] |
 | rgl/debian-vagrant             | https://github.com/rgl/debian-vagrant   |
+
+* Best Developed With Blee
+
+[[https://github.com/bx-blee][*Blee*]]", /By* BISOS Libre-Halaal Emacs Environment/
+is a layer on top of Emacs and BISOS which creates a
+comprehensive integrated usage and development environment. Blee and BISOS are intertwined.
+
+This python package is developed with Blee. Its evolution is best accomplished
+through continued use of Blee.
 
 * Support
 
